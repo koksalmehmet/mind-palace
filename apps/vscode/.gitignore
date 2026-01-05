@@ -3,6 +3,9 @@ out/
 dist/
 *.vsix
 
+# VS Code test runner downloads
+.vscode-test/
+
 # Node.js dependencies
 node_modules/
 npm-debug.log*
