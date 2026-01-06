@@ -1,4 +1,4 @@
-//go:build rust_parser
+//go:build cgo
 
 package analysis
 

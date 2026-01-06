@@ -1,4 +1,4 @@
-//go:build css_parser
+//go:build cgo
 
 package analysis
 

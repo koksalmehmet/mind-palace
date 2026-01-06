@@ -1,4 +1,4 @@
-//go:build lua_parser
+//go:build cgo
 
 package analysis
 

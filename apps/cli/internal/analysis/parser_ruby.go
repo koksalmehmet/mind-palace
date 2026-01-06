@@ -1,4 +1,4 @@
-//go:build ruby_parser
+//go:build cgo
 
 package analysis
 

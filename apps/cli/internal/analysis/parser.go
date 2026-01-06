@@ -18,52 +18,20 @@ func NewParserRegistry() *ParserRegistry {
 }
 
 func (r *ParserRegistry) registerDefaults() {
-	// Tree-sitter parsers - existing
-	r.Register(NewGoParser())
-	r.Register(NewJavaScriptParser())
-	r.Register(NewTypeScriptParser())
-	r.Register(NewPythonParser())
-	r.Register(NewRustParser())
-	r.Register(NewJavaParser())
+	// NOTE: Tree-sitter based parsers require CGO and are excluded on Windows.
+	// LSP-based parsers will be added to replace them (see dart_lsp.go for pattern).
+	// For now, only regex-based parsers are available without CGO.
 
-	// C family
-	r.Register(NewCParser())
-	r.Register(NewCPPParser())
-	r.Register(NewCSharpParser())
-
-	// Backend languages
-	r.Register(NewRubyParser())
-	r.Register(NewPHPParser())
-	r.Register(NewKotlinParser())
-	r.Register(NewScalaParser())
-	r.Register(NewSwiftParser())
-
-	// Infrastructure/scripting
-	r.Register(NewBashParser())
-	r.Register(NewSQLParser())
-	r.Register(NewDockerfileParser())
-	r.Register(NewHCLParser())
-
-	// Config/web
-	r.Register(NewHTMLParser())
-	r.Register(NewCSSParser())
-	r.Register(NewYAMLParser())
-	r.Register(NewTOMLParser())
-	r.Register(NewJSONParser())
-	r.Register(NewMarkdownParser())
-
-	// Other languages
-	r.Register(NewElixirParser())
-	r.Register(NewLuaParser())
-	r.Register(NewGroovyParser())
-	r.Register(NewSvelteParser())
-	r.Register(NewOCamlParser())
-	r.Register(NewElmParser())
-	r.Register(NewProtobufParser())
-
-	// Regex-based parsers
+	// Regex-based parsers (no CGO required, work on all platforms)
 	r.Register(NewDartParser())
 	r.Register(NewCUEParser())
+
+	// TODO: Add LSP-based parsers for major languages:
+	// - Go (gopls)
+	// - TypeScript/JavaScript (typescript-language-server)
+	// - Python (pyright or pylsp)
+	// - Rust (rust-analyzer)
+	// - etc.
 }
 
 func (r *ParserRegistry) Register(p Parser) {

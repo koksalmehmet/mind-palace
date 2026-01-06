@@ -1,4 +1,4 @@
-//go:build swift_parser
+//go:build cgo
 
 package analysis
 

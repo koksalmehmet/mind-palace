@@ -1,4 +1,4 @@
-//go:build html_parser
+//go:build cgo
 
 package analysis
 

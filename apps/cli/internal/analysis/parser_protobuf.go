@@ -1,4 +1,4 @@
-//go:build protobuf_parser
+//go:build cgo
 
 package analysis
 
