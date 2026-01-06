@@ -1,3 +1,5 @@
+//go:build css_parser
+
 package analysis
 
 import (

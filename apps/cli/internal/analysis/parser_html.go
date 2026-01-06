@@ -1,3 +1,5 @@
+//go:build html_parser
+
 package analysis
 
 import (

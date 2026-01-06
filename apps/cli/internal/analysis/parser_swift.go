@@ -1,3 +1,5 @@
+//go:build swift_parser
+
 package analysis
 
 import (

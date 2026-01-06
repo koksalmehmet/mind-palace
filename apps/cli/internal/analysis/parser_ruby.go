@@ -1,3 +1,5 @@
+//go:build ruby_parser
+
 package analysis
 
 import (
