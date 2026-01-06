@@ -129,8 +129,10 @@ describe("CorridorsComponent", () => {
     it("should load corridor data on initialization", () => {
       fixture.detectChanges();
 
-      const corridorReq = httpMock.expectOne((request) =>
-        request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal")
+      const corridorReq = httpMock.expectOne(
+        (request) =>
+          request.url.includes("/api/corridors") &&
+          !request.url.includes("/api/corridors/personal")
       );
       expect(corridorReq.request.method).toBe("GET");
       corridorReq.flush({
@@ -156,8 +158,10 @@ describe("CorridorsComponent", () => {
     it("should load corridor stats and links", () => {
       fixture.detectChanges();
 
-      const req = httpMock.expectOne((request) =>
-        request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal")
+      const req = httpMock.expectOne(
+        (request) =>
+          request.url.includes("/api/corridors") &&
+          !request.url.includes("/api/corridors/personal")
       );
       req.flush({
         stats: mockCorridorStats,
@@ -175,8 +179,10 @@ describe("CorridorsComponent", () => {
     it("should handle empty links in response", () => {
       fixture.detectChanges();
 
-      const req = httpMock.expectOne((request) =>
-        request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal")
+      const req = httpMock.expectOne(
+        (request) =>
+          request.url.includes("/api/corridors") &&
+          !request.url.includes("/api/corridors/personal")
       );
       req.flush({
         stats: mockCorridorStats,
@@ -193,8 +199,10 @@ describe("CorridorsComponent", () => {
     it("should handle missing links field in response", () => {
       fixture.detectChanges();
 
-      const req = httpMock.expectOne((request) =>
-        request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal")
+      const req = httpMock.expectOne(
+        (request) =>
+          request.url.includes("/api/corridors") &&
+          !request.url.includes("/api/corridors/personal")
       );
       req.flush({
         stats: mockCorridorStats,
@@ -213,7 +221,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -235,7 +247,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -253,7 +269,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -273,7 +293,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -291,7 +315,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -308,7 +336,11 @@ describe("CorridorsComponent", () => {
       fixture.detectChanges();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -329,7 +361,11 @@ describe("CorridorsComponent", () => {
     it("should display learning count", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -351,7 +387,11 @@ describe("CorridorsComponent", () => {
     it("should display average confidence", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -386,7 +426,11 @@ describe("CorridorsComponent", () => {
     it("should display personal learning cards", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -408,7 +452,11 @@ describe("CorridorsComponent", () => {
     it("should display confidence badges", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -432,7 +480,11 @@ describe("CorridorsComponent", () => {
     it("should display learning content", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -459,7 +511,11 @@ describe("CorridorsComponent", () => {
     it("should display origin workspace when present", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -483,7 +539,11 @@ describe("CorridorsComponent", () => {
     it("should display empty message when no learnings", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -505,7 +565,11 @@ describe("CorridorsComponent", () => {
     it("should display linked workspace cards", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -524,7 +588,11 @@ describe("CorridorsComponent", () => {
     it("should display workspace names", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -544,7 +612,11 @@ describe("CorridorsComponent", () => {
     it("should display workspace paths", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -564,7 +636,11 @@ describe("CorridorsComponent", () => {
     it("should display formatted dates", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -591,7 +667,11 @@ describe("CorridorsComponent", () => {
 
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: [linkWithoutAccess],
@@ -610,7 +690,11 @@ describe("CorridorsComponent", () => {
     it("should display empty message when no links", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: [],
@@ -679,7 +763,11 @@ describe("CorridorsComponent", () => {
 
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .error(new ProgressEvent("error"));
       httpMock
         .expectOne((request) => request.url.includes("/api/corridors/personal"))
@@ -699,7 +787,11 @@ describe("CorridorsComponent", () => {
 
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -719,7 +811,11 @@ describe("CorridorsComponent", () => {
     it("should reload data when loadData is called", () => {
       fixture.detectChanges();
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: mockCorridorStats,
           links: mockLinks,
@@ -735,7 +831,11 @@ describe("CorridorsComponent", () => {
       component.loadData();
 
       httpMock
-        .expectOne((request) => request.url.includes("/api/corridors") && !request.url.includes("/api/corridors/personal"))
+        .expectOne(
+          (request) =>
+            request.url.includes("/api/corridors") &&
+            !request.url.includes("/api/corridors/personal")
+        )
         .flush({
           stats: newStats,
           links: [],

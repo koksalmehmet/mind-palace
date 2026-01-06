@@ -18,6 +18,7 @@ describe("SessionsComponent", () => {
   const mockSessions: Session[] = [
     {
       id: "sess-1",
+      agentId: "agent-1",
       agentType: "code-editor",
       state: "active",
       goal: "Implement user authentication",
@@ -27,6 +28,7 @@ describe("SessionsComponent", () => {
     },
     {
       id: "sess-2",
+      agentId: "agent-2",
       agentType: "debugger",
       state: "completed",
       goal: "Fix memory leak in service",
@@ -36,12 +38,13 @@ describe("SessionsComponent", () => {
     },
     {
       id: "sess-3",
+      agentId: "agent-3",
       agentType: "code-review",
       state: "abandoned",
       goal: "Review PR #123",
       startedAt: "2025-01-04T11:00:00Z",
       lastActivity: "2025-01-04T11:15:00Z",
-      summary: null,
+      summary: "",
     },
   ];
 
@@ -182,12 +185,13 @@ describe("SessionsComponent", () => {
       const newSessions: Session[] = [
         {
           id: "sess-4",
+          agentId: "agent-4",
           agentType: "test-runner",
           state: "active",
           goal: "Run unit tests",
           startedAt: "2025-01-06T11:00:00Z",
           lastActivity: "2025-01-06T11:30:00Z",
-          summary: null,
+          summary: "",
         },
       ];
       component.sessions.set(newSessions);
@@ -315,12 +319,13 @@ describe("SessionsComponent", () => {
     it('should display "No goal specified" when goal is missing', () => {
       const sessionWithoutGoal: Session = {
         id: "sess-5",
+        agentId: "agent-5",
         agentType: "monitor",
         state: "active",
-        goal: null,
+        goal: "",
         startedAt: "2025-01-06T10:00:00Z",
         lastActivity: "2025-01-06T10:30:00Z",
-        summary: null,
+        summary: "",
       };
 
       fixture.detectChanges();
@@ -470,5 +475,3 @@ describe("SessionsComponent", () => {
     });
   });
 });
-
-

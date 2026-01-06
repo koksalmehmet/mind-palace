@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from "@angular/core";
 
 import { FormsModule } from "@angular/forms";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../core/services/api.service";
 import { LoggerService } from "../../core/services/logger.service";
 
@@ -52,7 +52,7 @@ interface TimelineEvent {
 
 @Component({
   selector: "app-conversations",
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   template: `
     <div class="conversations-container">
       <!-- Header -->

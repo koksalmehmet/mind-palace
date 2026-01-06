@@ -229,9 +229,13 @@ describe("WebSocketService", () => {
 
       // Assert
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy.mock.calls.some(call => 
-        call[0]?.toString().includes("Cannot send message") || call[0]?.toString().includes("not connected")
-      )).toBe(true);
+      expect(
+        consoleSpy.mock.calls.some(
+          (call) =>
+            call[0]?.toString().includes("Cannot send message") ||
+            call[0]?.toString().includes("not connected")
+        )
+      ).toBe(true);
 
       consoleSpy.mockRestore();
     });

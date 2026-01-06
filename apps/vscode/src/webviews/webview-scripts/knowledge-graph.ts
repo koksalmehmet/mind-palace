@@ -144,7 +144,12 @@ function renderGraph() {
     .selectAll("line")
     .data(links)
     .join("line")
-    .attr("class", (d) => "link " + d.relation);
+    .attr("class", (d) => "link " + d.relation) as d3.Selection<
+    SVGLineElement,
+    GraphLink,
+    SVGGElement,
+    unknown
+  >;
 
   // Create nodes
   node = g
@@ -162,18 +167,22 @@ function renderGraph() {
     })
     .on("mouseout", () => {
       tooltip.style.display = "none";
-    });
+    }) as d3.Selection<SVGGElement, GraphNode, SVGGElement, unknown>;
 
-  node
-    .append("circle")
-    .attr("r", (d) => 8 + d.links * 2)
-    .attr("opacity", (d) => (d.confidence ? 0.5 + d.confidence * 0.5 : 0.8));
+  if (node) {
+    node
+      .append("circle")
+      .attr("r", (d) => 8 + d.links * 2)
+      .attr("opacity", (d) => (d.confidence ? 0.5 + d.confidence * 0.5 : 0.8));
+  }
 
-  node
-    .append("text")
-    .attr("dx", 12)
-    .attr("dy", 4)
-    .text((d) => truncate(d.content, 30));
+  if (node) {
+    node
+      .append("text")
+      .attr("dx", 12)
+      .attr("dy", 4)
+      .text((d) => truncate(d.content, 30));
+  }
 
   // Update positions on tick
   simulation.on("tick", () => {

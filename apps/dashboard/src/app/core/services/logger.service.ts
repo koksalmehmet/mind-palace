@@ -145,10 +145,10 @@ export class LoggerService {
     };
 
     // Extract error and stack trace if present
-    if (metadata?.error) {
-      entry.error = metadata.error;
-      if (this.config.includeStackTrace && metadata.error instanceof Error) {
-        entry.stackTrace = metadata.error.stack;
+    if (metadata?.["error"]) {
+      entry.error = metadata["error"];
+      if (this.config.includeStackTrace && metadata["error"] instanceof Error) {
+        entry.stackTrace = metadata["error"].stack;
       }
     }
 

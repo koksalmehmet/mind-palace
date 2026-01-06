@@ -3,7 +3,7 @@
  * Bundled with Cytoscape to run in VS Code webview
  */
 
-import cytoscape from "cytoscape";
+import * as cytoscape from "cytoscape";
 
 // Declare vscode API (injected by VS Code)
 declare const acquireVsCodeApi: () => any;
@@ -586,7 +586,7 @@ function initCytoscape(elements: any) {
   cy = cytoscape({
     container: cyContainer,
     elements: elements,
-    style: getCytoscapeStyle(),
+    style: getCytoscapeStyle() as any,
     layout: getLayoutConfig(),
     wheelSensitivity: 0.25,
     minZoom: 0.25,

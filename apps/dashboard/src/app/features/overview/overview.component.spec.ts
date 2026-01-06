@@ -455,9 +455,11 @@ describe("OverviewComponent", () => {
       expect(component.stats()).toBeNull();
       // Logger service outputs formatted messages, verify it was called
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy.mock.calls.some(call => 
-        call[0]?.toString().includes("Failed to load stats")
-      )).toBe(true);
+      expect(
+        consoleSpy.mock.calls.some((call) =>
+          call[0]?.toString().includes("Failed to load stats")
+        )
+      ).toBe(true);
 
       consoleSpy.mockRestore();
     });
@@ -477,9 +479,13 @@ describe("OverviewComponent", () => {
       expect(component.agents()).toEqual([]);
       // Logger service outputs formatted messages, verify it was called
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy.mock.calls.some(call => 
-        call[0]?.toString().includes("Failed to load") && call[0]?.toString().includes("agents")
-      )).toBe(true);
+      expect(
+        consoleSpy.mock.calls.some(
+          (call) =>
+            call[0]?.toString().includes("Failed to load") &&
+            call[0]?.toString().includes("agents")
+        )
+      ).toBe(true);
 
       consoleSpy.mockRestore();
     });

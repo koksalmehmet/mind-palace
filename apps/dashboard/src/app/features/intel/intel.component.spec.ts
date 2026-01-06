@@ -58,12 +58,15 @@ describe("IntelComponent", () => {
   const mockFileLearnings: Learning[] = [
     {
       id: "learn-1",
+      sessionId: "sess-1",
       content: "This file handles authentication logic",
       confidence: 0.92,
       scope: "file",
       scopePath: "src/app/main.ts",
       source: "code-analysis",
-      useCount: 10,
+      useCount: 3,
+      createdAt: "2025-01-01T10:00:00Z",
+      lastUsed: "2025-01-06T10:00:00Z",
     },
   ];
 
@@ -259,15 +262,15 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 5,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
       const highEditFile: FileIntel = {
         path: "high.ts",
         editCount: 100,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       fixture.detectChanges();
@@ -285,8 +288,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 100,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       fixture.detectChanges();
@@ -304,15 +307,15 @@ describe("IntelComponent", () => {
         path: "medium.ts",
         editCount: 50,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
       const highFile: FileIntel = {
         path: "high.ts",
         editCount: 100,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       fixture.detectChanges();
@@ -352,8 +355,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 50,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       fixture.detectChanges();
@@ -371,8 +374,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 100,
         failureCount: 25,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       fixture.detectChanges();
@@ -390,8 +393,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 0,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       const percentage = component.getFailurePercentage(file);
@@ -404,8 +407,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 10,
         failureCount: 50,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       const percentage = component.getFailurePercentage(file);
@@ -420,8 +423,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 100,
         failureCount: 15,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       const rate = component.getFailureRate(file);
@@ -434,8 +437,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 0,
         failureCount: 0,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       const rate = component.getFailureRate(file);
@@ -448,8 +451,8 @@ describe("IntelComponent", () => {
         path: "test.ts",
         editCount: 100,
         failureCount: 17,
-        lastEditor: null,
-        lastEdited: null,
+        lastEditor: "",
+        lastEdited: "",
       };
 
       const rate = component.getFailureRate(file);
@@ -659,4 +662,3 @@ describe("IntelComponent", () => {
     });
   });
 });
-

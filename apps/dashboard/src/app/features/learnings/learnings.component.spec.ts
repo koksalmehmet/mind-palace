@@ -19,30 +19,39 @@ describe("LearningsComponent", () => {
   const mockLearnings: Learning[] = [
     {
       id: "learn-1",
+      sessionId: "sess-1",
       content: "Always validate user input before processing",
       confidence: 0.95,
       scope: "palace",
       scopePath: "/src/app",
       source: "code-review",
       useCount: 15,
+      createdAt: "2025-01-01T10:00:00Z",
+      lastUsed: "2025-01-06T10:00:00Z",
     },
     {
       id: "learn-2",
+      sessionId: "sess-2",
       content: "Use dependency injection for services",
       confidence: 0.87,
       scope: "room",
       scopePath: "/src/services",
       source: "pattern-analysis",
       useCount: 8,
+      createdAt: "2025-01-02T10:00:00Z",
+      lastUsed: "2025-01-05T10:00:00Z",
     },
     {
       id: "learn-3",
+      sessionId: "sess-3",
       content: "Handle errors with proper logging",
       confidence: 0.72,
       scope: "file",
       scopePath: "/src/app/main.ts",
       source: "debugging",
       useCount: 3,
+      createdAt: "2025-01-03T10:00:00Z",
+      lastUsed: "2025-01-04T10:00:00Z",
     },
   ];
 
@@ -230,8 +239,11 @@ describe("LearningsComponent", () => {
           content: "Test all edge cases",
           confidence: 0.99,
           scope: "palace",
-          scopePath: null,
-          source: "testing",
+          scopePath: "",
+          source: "test-suite",
+          sessionId: "sess-4",
+          createdAt: "2025-01-06T12:00:00Z",
+          lastUsed: "2025-01-06T12:00:00Z",
           useCount: 25,
         },
       ];
@@ -325,8 +337,11 @@ describe("LearningsComponent", () => {
         content: "Global best practice",
         confidence: 0.9,
         scope: "palace",
-        scopePath: null,
-        source: "code-review",
+        scopePath: "",
+        source: "documentation",
+        sessionId: "sess-5",
+        createdAt: "2025-01-06T13:00:00Z",
+        lastUsed: "2025-01-06T13:00:00Z",
         useCount: 10,
       };
 
@@ -509,11 +524,14 @@ describe("LearningsComponent", () => {
     it("should handle learnings with very low confidence", () => {
       const lowConfidenceLearning: Learning = {
         id: "learn-low",
-        content: "Experimental approach",
+        content: "Experimental pattern",
         confidence: 0.15,
         scope: "file",
-        scopePath: "/test.ts",
-        source: "experiment",
+        scopePath: "/experimental.ts",
+        source: "experimentation",
+        sessionId: "sess-low",
+        createdAt: "2025-01-06T14:00:00Z",
+        lastUsed: "2025-01-06T14:00:00Z",
         useCount: 1,
       };
 
@@ -535,8 +553,11 @@ describe("LearningsComponent", () => {
         content: "Well-established pattern",
         confidence: 1.0,
         scope: "palace",
-        scopePath: null,
+        scopePath: "",
         source: "best-practice",
+        sessionId: "sess-max",
+        createdAt: "2025-01-06T15:00:00Z",
+        lastUsed: "2025-01-06T15:00:00Z",
         useCount: 50,
       };
 
@@ -553,4 +574,3 @@ describe("LearningsComponent", () => {
     });
   });
 });
-
