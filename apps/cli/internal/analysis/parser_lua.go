@@ -1,3 +1,5 @@
+//go:build lua_parser
+
 package analysis
 
 import (

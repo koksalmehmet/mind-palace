@@ -1,3 +1,5 @@
+//go:build c_parser
+
 package analysis
 
 import (

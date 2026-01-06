@@ -1,3 +1,5 @@
+//go:build rust_parser
+
 package analysis
 
 import (

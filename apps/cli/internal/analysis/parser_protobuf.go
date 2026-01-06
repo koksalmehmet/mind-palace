@@ -1,3 +1,5 @@
+//go:build protobuf_parser
+
 package analysis
 
 import (
