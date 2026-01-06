@@ -383,6 +383,7 @@
     "pretest": "npm run compile"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.3",
     "@types/cytoscape": "^3.21.9",
     "@types/minimatch": "^5.1.2",
     "@types/mocha": "^10.0.10",
@@ -390,6 +391,7 @@
     "@types/sinon": "^17.0.4",
     "@types/vscode": "^1.80.0",
     "@vscode/test-electron": "^2.4.1",
+    "chai": "^6.2.2",
     "cytoscape": "^3.33.1",
     "mocha": "^10.8.2",
     "nyc": "^17.1.0",

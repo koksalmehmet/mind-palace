@@ -105,7 +105,7 @@ export function getConfig(): MergedConfig {
 /**
  * Reads the vscode section from .palace/palace.jsonc
  */
-function readProjectConfig(): PalaceVSCodeConfig | null {
+export function readProjectConfig(): PalaceVSCodeConfig | null {
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
     if (!workspaceFolder) {
         return null;

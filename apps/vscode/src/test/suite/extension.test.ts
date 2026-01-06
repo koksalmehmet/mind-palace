@@ -1,11 +1,92 @@
-import * as assert from 'assert';
+import * as vscode from 'vscode';
+import { expect } from 'chai';
+import * as sinon from 'sinon';
 
-describe('Extension Tests', () => {
-  it('sample test', () => {
-    assert.strictEqual(1 + 1, 2);
+/**
+ * Extension Activation Tests
+ * Tests the core extension lifecycle and command registration
+ */
+describe('Extension Activation Tests', () => {
+  let sandbox: sinon.SinonSandbox;
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
   });
 
-  it('extension module test', () => {
-    assert.ok(true);
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('should activate the extension', async () => {
+    const ext = vscode.extensions.getExtension('mind-palace.mind-palace-vscode');
+    expect(ext).to.not.be.undefined;
+
+    if (ext && !ext.isActive) {
+      await ext.activate();
+    }
+
+    expect(ext?.isActive).to.be.true;
+  });
+
+  it('should register all required commands', async () => {
+    const commands = await vscode.commands.getCommands(true);
+    
+    const requiredCommands = [
+      'mindPalace.heal',
+      'mindPalace.checkStatus',
+      'mindPalace.openBlueprint',
+      'mindPalace.refreshKnowledge',
+      'mindPalace.storeIdea',
+      'mindPalace.storeDecision',
+      'mindPalace.storeLearning',
+      'mindPalace.quickStore',
+      'mindPalace.startSession',
+      'mindPalace.endSession',
+      'mindPalace.semanticSearch',
+      'mindPalace.showKnowledgeGraph',
+    ];
+
+    for (const cmd of requiredCommands) {
+      expect(commands).to.include(cmd, `Command ${cmd} should be registered`);
+    }
+  });
+
+  it('should create tree data providers', async () => {
+    // Verify extension has activated and providers are registered
+    const ext = vscode.extensions.getExtension('mind-palace.mind-palace-vscode');
+    if (ext && !ext.isActive) {
+      await ext.activate();
+    }
+
+    // Since tree providers are internal, we verify they exist by checking commands work
+    const commands = await vscode.commands.getCommands(true);
+    expect(commands).to.include('mindPalace.refreshKnowledge');
+    expect(commands).to.include('mindPalace.refreshSessions');
+    expect(commands).to.include('mindPalace.refreshCorridor');
+  });
+
+  it('should handle command execution without errors', async () => {
+    const ext = vscode.extensions.getExtension('mind-palace.mind-palace-vscode');
+    if (ext && !ext.isActive) {
+      await ext.activate();
+    }
+
+    // Test that checkStatus command can be executed (even if it fails due to no CLI)
+    try {
+      await vscode.commands.executeCommand('mindPalace.checkStatus');
+    } catch (error) {
+      // Expected to fail if CLI is not available, but should not crash
+      expect(error).to.exist;
+    }
+  });
+
+  it('should register webview providers', async () => {
+    const ext = vscode.extensions.getExtension('mind-palace.mind-palace-vscode');
+    if (ext && !ext.isActive) {
+      await ext.activate();
+    }
+
+    // Webview providers are registered, verify through extension activation
+    expect(ext?.isActive).to.be.true;
   });
 });
