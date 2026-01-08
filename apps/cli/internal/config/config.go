@@ -325,7 +325,7 @@ func CopySchemas(root string, allowOverwrite bool) error {
 	}
 	for name, data := range schemaMap {
 		dest := filepath.Join(schemaDir, fmt.Sprintf("%s.schema.json", name))
-		if existing, err := os.ReadFile(dest); //nolint:gosec // trusted schema path err == nil && len(existing) > 0 {
+		if existing, err := os.ReadFile(dest); err == nil && len(existing) > 0 { //nolint:gosec // trusted schema path
 			if bytes.Equal(existing, data) {
 				continue // already canonical
 			}
