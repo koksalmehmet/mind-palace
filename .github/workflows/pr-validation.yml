@@ -134,6 +134,7 @@ jobs:
         with:
           name: vscode-test-results
           path: apps/vscode/test-results/
+          if-no-files-found: ignore
 
   # ============================================================
   # Lint & Static Analysis
@@ -264,6 +265,7 @@ jobs:
         with:
           name: e2e-test-results
           path: /tmp/palace-e2e-*/
+          if-no-files-found: ignore
 
   # ============================================================
   # Security Scanning
@@ -284,7 +286,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
