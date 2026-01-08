@@ -94,7 +94,7 @@ func (m *Memory) GetConversation(id string) (*Conversation, error) {
 }
 
 // GetConversations retrieves conversations with optional filters.
-func (m *Memory) GetConversations(sessionID string, agentType string, limit int) ([]Conversation, error) {
+func (m *Memory) GetConversations(sessionID, agentType string, limit int) ([]Conversation, error) {
 	query := `SELECT id, agent_type, summary, messages, extracted, session_id, created_at FROM conversations WHERE 1=1`
 	args := []interface{}{}
 
@@ -251,7 +251,7 @@ func (m *Memory) UpdateConversationExtracted(id string, extracted []string) erro
 }
 
 // EndSessionWithConversation ends a session and stores the conversation.
-func (m *Memory) EndSessionWithConversation(sessionID string, summary string, messages []Message, agentType string) error {
+func (m *Memory) EndSessionWithConversation(sessionID, summary string, messages []Message, agentType string) error {
 	// End the session (existing functionality)
 	if err := m.EndSession(sessionID, "completed", summary); err != nil {
 		return err

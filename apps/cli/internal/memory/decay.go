@@ -351,7 +351,7 @@ func (m *Memory) ApplyDecay(cfg DecayConfig) (*DecayResult, error) {
 }
 
 // BoostConfidence increases confidence for a learning (opposite of decay).
-func (m *Memory) BoostConfidence(id string, boost float64, maxConfidence float64) error {
+func (m *Memory) BoostConfidence(id string, boost, maxConfidence float64) error {
 	if maxConfidence <= 0 {
 		maxConfidence = 1.0
 	}

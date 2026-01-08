@@ -296,33 +296,37 @@ func extractFromZip(archivePath, binaryName string) (string, error) {
 
 	for _, f := range r.File {
 		if filepath.Base(f.Name) == binaryName {
-			rc, err := f.Open()
-			if err != nil {
-				return "", err
-			}
-			defer rc.Close()
-
-			tmpFile, err := os.CreateTemp("", "palace-binary-*")
-			if err != nil {
-				return "", err
-			}
-			defer tmpFile.Close()
-
-			if _, err := io.Copy(tmpFile, rc); err != nil {
-				os.Remove(tmpFile.Name())
-				return "", err
-			}
-
-			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
-				os.Remove(tmpFile.Name())
-				return "", err
-			}
-
-			return tmpFile.Name(), nil
+			return extractZipFile(f)
 		}
 	}
 
 	return "", fmt.Errorf("binary %s not found in archive", binaryName)
+}
+
+func extractZipFile(f *zip.File) (string, error) {
+	rc, err := f.Open()
+	if err != nil {
+		return "", err
+	}
+	defer rc.Close()
+
+	tmpFile, err := os.CreateTemp("", "palace-binary-*")
+	if err != nil {
+		return "", err
+	}
+	defer tmpFile.Close()
+
+	if _, err := io.Copy(tmpFile, rc); err != nil {
+		os.Remove(tmpFile.Name())
+		return "", err
+	}
+
+	if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
+		os.Remove(tmpFile.Name())
+		return "", err
+	}
+
+	return tmpFile.Name(), nil
 }
 
 func downloadToTemp(url string) (string, error) {

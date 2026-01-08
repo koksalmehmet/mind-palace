@@ -260,7 +260,7 @@ func (m *Memory) CheckAndUpdateStaleness(rootPath string) (int, error) {
 
 // ValidateCodeTarget validates that a code target exists and line range is valid.
 // Returns the file's mtime if valid.
-func ValidateCodeTarget(rootPath string, target string) (*CodeTarget, time.Time, error) {
+func ValidateCodeTarget(rootPath, target string) (*CodeTarget, time.Time, error) {
 	parsed, err := ParseCodeTarget(target)
 	if err != nil {
 		return nil, time.Time{}, err

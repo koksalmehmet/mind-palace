@@ -186,7 +186,10 @@ func TestNewClientWithEnvVars(t *testing.T) {
 			// Set environment variables
 			for k, v := range tt.envVars {
 				os.Setenv(k, v)
-				defer os.Unsetenv(k)
+				val := k // capture loop variable
+				t.Cleanup(func() {
+					os.Unsetenv(val)
+				})
 			}
 
 			client, err := NewClient(tt.config)

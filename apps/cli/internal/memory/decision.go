@@ -333,7 +333,7 @@ func (m *Memory) CountDecisions(status, outcome string) (int, error) {
 }
 
 // GetDecisionsAwaitingReview returns decisions older than the given age with unknown outcome.
-func (m *Memory) GetDecisionsAwaitingReview(olderThanDays int, limit int) ([]Decision, error) {
+func (m *Memory) GetDecisionsAwaitingReview(olderThanDays, limit int) ([]Decision, error) {
 	cutoff := time.Now().AddDate(0, 0, -olderThanDays).Format(time.RFC3339)
 	query := `
 		SELECT id, content, rationale, context, status, outcome, outcome_note, outcome_at, scope, scope_path, session_id, source, created_at, updated_at
@@ -461,7 +461,7 @@ func (m *Memory) CheckDecisionConflicts(decisionID string) ([]DecisionConflict, 
 }
 
 // FindSimilarDecisions finds decisions with similar content that may conflict.
-func (m *Memory) FindSimilarDecisions(content string, excludeID string, limit int) ([]Decision, error) {
+func (m *Memory) FindSimilarDecisions(content, excludeID string, limit int) ([]Decision, error) {
 	// Use FTS to find similar decisions
 	if limit <= 0 {
 		limit = 5

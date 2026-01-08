@@ -124,7 +124,7 @@ func detectLanguages(root string) []string {
 
 // hasMonorepoSubproject checks common monorepo directories for a specific file
 // This handles patterns like apps/*/pubspec.yaml, packages/*/pubspec.yaml, etc.
-func hasMonorepoSubproject(root string, filename string) bool {
+func hasMonorepoSubproject(root, filename string) bool {
 	monorepoPatterns := []string{"apps", "packages", "libs", "modules", "services"}
 	for _, pattern := range monorepoPatterns {
 		patternDir := filepath.Join(root, pattern)
@@ -142,7 +142,7 @@ func hasMonorepoSubproject(root string, filename string) bool {
 }
 
 // hasFileWithExtension checks if any file with the given extension exists in the root directory
-func hasFileWithExtension(root string, ext string) bool {
+func hasFileWithExtension(root, ext string) bool {
 	entries, err := os.ReadDir(root)
 	if err != nil {
 		return false
