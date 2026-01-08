@@ -103,7 +103,13 @@ func (e *OllamaEmbedder) Embed(text string) ([]float32, error) {
 		return nil, fmt.Errorf("marshal request: %w", err)
 	}
 
-	resp, err := e.client.Post(e.url+"/api/embeddings", "application/json", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(context.Background(), "POST", e.url+"/api/embeddings", bytes.NewReader(body))
+	if err != nil {
+		return nil, fmt.Errorf("create request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := e.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("ollama request failed: %w", err)
 	}
@@ -155,7 +161,7 @@ func (e *OpenAIEmbedder) Embed(text string) ([]float32, error) {
 		return nil, fmt.Errorf("marshal request: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", "https://api.openai.com/v1/embeddings", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(context.Background(), "POST", "https://api.openai.com/v1/embeddings", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}

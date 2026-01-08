@@ -192,6 +192,9 @@ func TestTypeAliases(t *testing.T) {
 	if pl.ID != "test-id" {
 		t.Error("PersonalLearning type alias not working")
 	}
+	if pl.Content != "test content" {
+		t.Error("PersonalLearning Content not set correctly")
+	}
 
 	lw := LinkedWorkspace{
 		Name: "test-workspace",
@@ -200,6 +203,9 @@ func TestTypeAliases(t *testing.T) {
 	if lw.Name != "test-workspace" {
 		t.Error("LinkedWorkspace type alias not working")
 	}
+	if lw.Path != "/path/to/workspace" {
+		t.Error("LinkedWorkspace Path not set correctly")
+	}
 
 	l := Learning{
 		ID:      "learn-id",
@@ -207,6 +213,9 @@ func TestTypeAliases(t *testing.T) {
 	}
 	if l.ID != "learn-id" {
 		t.Error("Learning type alias not working")
+	}
+	if l.Content != "learn content" {
+		t.Error("Learning Content not set correctly")
 	}
 }
 

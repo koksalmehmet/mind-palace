@@ -179,7 +179,7 @@ func (m *Memory) RecordOutcome(sessionID, outcome, summary string) error {
 		SessionID: sessionID,
 		Kind:      "outcome",
 		Target:    "",
-		Details:   fmt.Sprintf(`{"outcome":"%s"}`, outcome),
+		Details:   fmt.Sprintf(`{"outcome":%q}`, outcome),
 		Outcome:   outcome,
 	}
 	if err := m.LogActivity(sessionID, act); err != nil {

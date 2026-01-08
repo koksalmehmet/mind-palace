@@ -215,6 +215,15 @@ func TestCheckResult(t *testing.T) {
 	if !result.UpdateAvailable {
 		t.Error("UpdateAvailable should be true")
 	}
+	if result.ReleaseURL != "https://github.com/owner/repo/releases/v2.0.0" {
+		t.Errorf("ReleaseURL = %q, want expected URL", result.ReleaseURL)
+	}
+	if result.DownloadURL != "https://github.com/owner/repo/releases/download/v2.0.0/binary" {
+		t.Errorf("DownloadURL = %q, want expected URL", result.DownloadURL)
+	}
+	if result.ChecksumURL != "https://github.com/owner/repo/releases/download/v2.0.0/binary.sha256" {
+		t.Errorf("ChecksumURL = %q, want expected URL", result.ChecksumURL)
+	}
 }
 
 func TestRelease(t *testing.T) {
@@ -234,6 +243,15 @@ func TestRelease(t *testing.T) {
 
 	if release.TagName != "v1.0.0" {
 		t.Errorf("TagName = %q, want %q", release.TagName, "v1.0.0")
+	}
+	if release.Name != "Release 1.0.0" {
+		t.Errorf("Name = %q, want %q", release.Name, "Release 1.0.0")
+	}
+	if release.Body != "Release notes here" {
+		t.Errorf("Body = %q, want %q", release.Body, "Release notes here")
+	}
+	if release.HTMLURL != "https://github.com/owner/repo/releases/v1.0.0" {
+		t.Errorf("HTMLURL = %q, want expected URL", release.HTMLURL)
 	}
 	if len(release.Assets) != 1 {
 		t.Errorf("Assets length = %d, want %d", len(release.Assets), 1)

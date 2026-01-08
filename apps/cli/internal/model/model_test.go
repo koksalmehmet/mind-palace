@@ -250,7 +250,7 @@ func TestContextPackTypes(t *testing.T) {
 		FetchedAt: time.Now().Format(time.RFC3339),
 		Error:     "",
 	}
-	if corridor.Name != "neighbor1" || corridor.Source != "https://example.com/context.json" || corridor.Goal != "Remote goal" || len(corridor.Files) != 1 || len(corridor.Rooms) != 1 || !corridor.FromCache || corridor.FetchedAt == "" {
+	if corridor.Name != "neighbor1" || corridor.Source != "https://example.com/context.json" || corridor.Goal != "Remote goal" || len(corridor.Files) != 1 || len(corridor.Rooms) != 1 || !corridor.FromCache || corridor.FetchedAt == "" || corridor.Error != "" {
 		t.Error("CorridorInfo fields not set correctly")
 	}
 }
@@ -298,16 +298,16 @@ func TestRoomAndPlaybookTypes(t *testing.T) {
 }
 
 func TestCapabilityType(t *testing.T) {
-	cap := model.Capability{
+	capability := model.Capability{
 		Command:          "npm test",
 		Description:      "Run tests",
 		WorkingDirectory: "./src",
 		Env:              map[string]string{"NODE_ENV": "test"},
 	}
-	if cap.Command != "npm test" || cap.Description != "Run tests" || cap.WorkingDirectory != "./src" {
+	if capability.Command != "npm test" || capability.Description != "Run tests" || capability.WorkingDirectory != "./src" {
 		t.Error("Capability fields not set correctly")
 	}
-	if cap.Env["NODE_ENV"] != "test" {
+	if capability.Env["NODE_ENV"] != "test" {
 		t.Error("Capability env not set correctly")
 	}
 }

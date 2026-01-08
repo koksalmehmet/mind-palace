@@ -437,10 +437,3 @@ func (g *GlobalCorridor) PruneStaleLinks() ([]string, error) {
 	}
 	return stale, nil
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
