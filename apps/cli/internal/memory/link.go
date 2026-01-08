@@ -224,7 +224,8 @@ func (m *Memory) CheckAndUpdateStaleness(rootPath string) (int, error) {
 	}
 
 	staleCount := 0
-	for _, link := range links {
+	for i := range links {
+		link := &links[i]
 		if link.TargetKind != TargetKindCode {
 			continue
 		}

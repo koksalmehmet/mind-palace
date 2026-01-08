@@ -109,7 +109,7 @@ func TestGoLSPParser_Parse(t *testing.T) {
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "test.go")
 
-	if err := os.WriteFile(testFile, []byte(testGoCode), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(testGoCode), 0o644); err != nil {
 		t.Fatalf("Failed to write test file: %v", err)
 	}
 
@@ -226,7 +226,7 @@ func broken( {
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "broken.go")
 
-	if err := os.WriteFile(testFile, []byte(invalidCode), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(invalidCode), 0o644); err != nil {
 		t.Fatalf("Failed to write test file: %v", err)
 	}
 
@@ -274,7 +274,7 @@ var privateVar = "private"
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "exports.go")
 
-	if err := os.WriteFile(testFile, []byte(code), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(code), 0o644); err != nil {
 		t.Fatalf("Failed to write test file: %v", err)
 	}
 
@@ -336,7 +336,7 @@ func (c Circle) Area() float64 {
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "shapes.go")
 
-	if err := os.WriteFile(testFile, []byte(code), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(code), 0o644); err != nil {
 		t.Fatalf("Failed to write test file: %v", err)
 	}
 
@@ -386,7 +386,7 @@ func BenchmarkGoLSPParser_Parse(b *testing.B) {
 	tmpDir := b.TempDir()
 	testFile := filepath.Join(tmpDir, "bench.go")
 
-	if err := os.WriteFile(testFile, []byte(testGoCode), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(testGoCode), 0o644); err != nil {
 		b.Fatalf("Failed to write test file: %v", err)
 	}
 
@@ -414,7 +414,7 @@ func TestGoLSPParser_CompareWithTreeSitter(t *testing.T) {
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "compare.go")
 
-	if err := os.WriteFile(testFile, []byte(testGoCode), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(testGoCode), 0o644); err != nil {
 		t.Fatalf("Failed to write test file: %v", err)
 	}
 

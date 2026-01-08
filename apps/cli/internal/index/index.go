@@ -278,7 +278,7 @@ func BuildFileRecords(root string, guardrails config.Guardrails) ([]FileRecord, 
 		if err != nil {
 			return nil, fmt.Errorf("stat %s: %w", rel, err)
 		}
-		data, err := os.ReadFile(abs)
+		data, err := os.ReadFile(abs) //nolint:gosec // file inclusion from indexed files
 		if err != nil {
 			return nil, fmt.Errorf("read %s: %w", rel, err)
 		}

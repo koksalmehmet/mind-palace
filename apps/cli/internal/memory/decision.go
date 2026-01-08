@@ -253,7 +253,8 @@ func (m *Memory) RecordDecisionOutcome(id, outcome, note string) error {
 	// Feedback to linked learnings - adjust their confidence based on outcome
 	learnings, err := m.GetLearningsForDecision(id)
 	if err == nil && len(learnings) > 0 {
-		for _, l := range learnings {
+		for i := range learnings {
+			l := &learnings[i]
 			switch outcome {
 			case DecisionOutcomeSuccessful:
 				// Successful outcome reinforces the learning
@@ -419,7 +420,8 @@ func (m *Memory) CheckDecisionConflicts(decisionID string) ([]DecisionConflict, 
 	// 1. Check for contradicting links
 	links, err := m.GetAllLinksFor(decisionID)
 	if err == nil {
-		for _, link := range links {
+		for i := range links {
+			link := &links[i]
 			if link.Relation == RelationContradicts {
 				// Get the contradicting decision
 				otherID := link.TargetID
@@ -439,7 +441,8 @@ func (m *Memory) CheckDecisionConflicts(decisionID string) ([]DecisionConflict, 
 	}
 
 	// 2. Check if this decision superseded another (and that one had bad outcome)
-	for _, link := range links {
+	for i := range links {
+		link := &links[i]
 		if link.Relation == RelationSupersedes && link.SourceID == decisionID {
 			if superseded, err := m.GetDecision(link.TargetID); err == nil {
 				if superseded.Outcome == "failed" {
@@ -471,9 +474,10 @@ func (m *Memory) FindSimilarDecisions(content string, excludeID string, limit in
 
 	// Filter out the excluded ID and return
 	var filtered []Decision
-	for _, d := range decisions {
+	for i := range decisions {
+		d := &decisions[i]
 		if d.ID != excludeID {
-			filtered = append(filtered, d)
+			filtered = append(filtered, *d)
 		}
 		if len(filtered) >= limit {
 			break
@@ -521,7 +525,8 @@ func (m *Memory) GetDecisionChain(id string) (*DecisionChain, error) {
 	// Get all links for this decision
 	links, err := m.GetAllLinksFor(id)
 	if err == nil {
-		for _, link := range links {
+		for i := range links {
+			link := &links[i]
 			// Skip non-decision relations
 			if link.Relation != RelationSupersedes && link.Relation != RelationContradicts {
 				continue

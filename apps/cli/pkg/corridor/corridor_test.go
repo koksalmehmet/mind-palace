@@ -387,7 +387,7 @@ func TestOpenGlobalLinkUnlink(t *testing.T) {
 
 	// Create .palace directory to make it a valid workspace
 	palaceDir := tmpDir + "/.palace"
-	if err := os.MkdirAll(palaceDir, 0755); err != nil {
+	if err := os.MkdirAll(palaceDir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error: %v", err)
 	}
 

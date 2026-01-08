@@ -1,0 +1,78 @@
+Lint: Go	golangci-lint	﻿2026-01-08T18:57:19.5772650Z ##[group]Run golangci/golangci-lint-action@v9
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5772985Z with:
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5773198Z   version: latest
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5773408Z   args: --timeout=5m ./apps/cli/...
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5773656Z   only-new-issues: true
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5773880Z   install-mode: binary
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5774089Z   install-only: false
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5774425Z   github-token: ***
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5774609Z   verify: true
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5774796Z   skip-cache: false
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5774990Z   skip-save-cache: false
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5775212Z   cache-invalidation-interval: 7
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5775456Z   problem-matchers: false
+Lint: Go	golangci-lint	2026-01-08T18:57:19.5775667Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T18:57:19.7166669Z ##[group]Restore cache
+Lint: Go	golangci-lint	2026-01-08T18:57:19.7171507Z Checking for go.mod: go.mod
+Lint: Go	golangci-lint	2026-01-08T18:57:19.7178647Z (node:2168) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Lint: Go	golangci-lint	2026-01-08T18:57:19.7179928Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Lint: Go	golangci-lint	2026-01-08T18:57:19.9312549Z Cache hit for: golangci-lint.cache-Linux-2923-b974cfb101ffe864b620c04f65c45fafc67e4e72
+Lint: Go	golangci-lint	2026-01-08T18:57:19.9420880Z (node:2168) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Lint: Go	golangci-lint	2026-01-08T18:57:20.4371652Z Received 453336 of 453336 (100.0%), 1.5 MBs/sec
+Lint: Go	golangci-lint	2026-01-08T18:57:20.4372268Z Cache Size: ~0 MB (453336 B)
+Lint: Go	golangci-lint	2026-01-08T18:57:20.4401666Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ee487930-938d-49bd-aa50-f5a4f328fb4e/cache.tzst -P -C /home/runner/work/mind-palace/mind-palace --use-compress-program unzstd
+Lint: Go	golangci-lint	2026-01-08T18:57:20.5579055Z Cache restored successfully
+Lint: Go	golangci-lint	2026-01-08T18:57:20.5584302Z Restored cache for golangci-lint from key 'golangci-lint.cache-Linux-2923-b974cfb101ffe864b620c04f65c45fafc67e4e72' in 842ms
+Lint: Go	golangci-lint	2026-01-08T18:57:20.5585433Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T18:57:20.5585780Z ##[group]Install
+Lint: Go	golangci-lint	2026-01-08T18:57:20.5588356Z Finding needed golangci-lint version...
+Lint: Go	golangci-lint	2026-01-08T18:57:20.6202957Z Requested golangci-lint 'latest', using 'v2.8.0', calculation took 61ms
+Lint: Go	golangci-lint	2026-01-08T18:57:20.6203695Z Installation mode: binary
+Lint: Go	golangci-lint	2026-01-08T18:57:20.6204511Z Installing golangci-lint binary v2.8.0...
+Lint: Go	golangci-lint	2026-01-08T18:57:20.6205769Z Downloading binary https://github.com/golangci/golangci-lint/releases/download/v2.8.0/golangci-lint-2.8.0-linux-amd64.tar.gz ...
+Lint: Go	golangci-lint	2026-01-08T18:57:21.0845377Z [command]/usr/bin/tar xz --overwrite --warning=no-unknown-keyword --overwrite -C /home/runner -f /home/runner/work/_temp/83ccc322-ef0f-47bd-8925-a441550fe5ed
+Lint: Go	golangci-lint	2026-01-08T18:57:21.3376863Z Installed golangci-lint into /home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint in 717ms
+Lint: Go	golangci-lint	2026-01-08T18:57:21.3381353Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T18:57:21.3385546Z ##[group]run golangci-lint
+Lint: Go	golangci-lint	2026-01-08T18:57:21.9577539Z Writing patch to /tmp/tmp-2168-Qe5qC1IYO7Wb/push.patch
+Lint: Go	golangci-lint	2026-01-08T18:57:21.9587863Z only new issues on push: /tmp/tmp-2168-Qe5qC1IYO7Wb/push.patch
+Lint: Go	golangci-lint	2026-01-08T18:57:21.9590084Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint config path] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T18:57:22.0739549Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint config verify] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T18:57:22.4384488Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint run --new-from-patch=/tmp/tmp-2168-Qe5qC1IYO7Wb/push.patch --new=false --new-from-rev= --new-from-merge-base= --timeout=5m ./apps/cli/...] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4605562Z ##[error]apps/cli/internal/update/update.go:328:14: httpNoBody: http.NoBody should be preferred to the nil request body (gocritic)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4614565Z 	req, err := http.NewRequest("GET", url, nil)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4614915Z 	            ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4615741Z ##[error]apps/cli/internal/signal/paths.go:3:1: File is not properly formatted (goimports)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4617003Z import "context"
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4617195Z ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4617817Z ##[error]apps/cli/internal/signal/signal.go:3:1: File is not properly formatted (goimports)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4619006Z import "context"
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4619200Z ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4619787Z ##[error]apps/cli/internal/signal/signal_test.go:3:1: File is not properly formatted (goimports)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4620608Z import "context"
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4620796Z ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4621398Z ##[error]apps/cli/internal/verify/verify_test.go:3:1: File is not properly formatted (goimports)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4622203Z import "context"
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4622527Z ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4623568Z ##[error]apps/cli/internal/update/update.go:178:29: net/http.NewRequest must not be called. use net/http.NewRequestWithContext (noctx)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4625395Z 	req, err := http.NewRequest("GET", url, http.NoBody)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4626073Z 	                           ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4628477Z ##[error]apps/cli/internal/index/oracle.go:755:12: var-declaration: should omit type func(file string) error from declaration of var visit; it will be inferred from the right-hand side (revive)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4630641Z 	var visit func(file string) error = func(file string) error {
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4631217Z 	          ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4632658Z ##[error]apps/cli/internal/butler/mcp_tools_oracle.go:179:25: QF1008: could remove embedded field "ContextResult" from selector (staticcheck)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4634502Z 		for i := range result.ContextResult.Symbols {
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4635122Z 		                      ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4636551Z ##[error]apps/cli/internal/butler/mcp_tools_oracle.go:180:19: QF1008: could remove embedded field "ContextResult" from selector (staticcheck)
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4638823Z 			sym := &result.ContextResult.Symbols[i]
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4639369Z 			               ^
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4639682Z 9 issues:
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4639966Z * gocritic: 1
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4640281Z * goimports: 4
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4640576Z * noctx: 1
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4640860Z * revive: 1
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4641156Z * staticcheck: 2
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4641352Z 
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4652527Z ##[error]issues found
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4653980Z Ran golangci-lint in 21019ms
+Lint: Go	golangci-lint	2026-01-08T18:57:43.4654637Z ##[endgroup]

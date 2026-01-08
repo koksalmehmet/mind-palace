@@ -267,18 +267,19 @@ func extractFromTarGz(archivePath, binaryName string) (string, error) {
 			if err != nil {
 				return "", err
 			}
-			defer tmpFile.Close()
-
 			if _, err := io.Copy(tmpFile, tr); err != nil {
+				tmpFile.Close()
 				os.Remove(tmpFile.Name())
 				return "", err
 			}
 
-			if err := os.Chmod(tmpFile.Name(), 0755); err != nil {
+			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
+				tmpFile.Close()
 				os.Remove(tmpFile.Name())
 				return "", err
 			}
 
+			tmpFile.Close()
 			return tmpFile.Name(), nil
 		}
 	}
@@ -312,7 +313,7 @@ func extractFromZip(archivePath, binaryName string) (string, error) {
 				return "", err
 			}
 
-			if err := os.Chmod(tmpFile.Name(), 0755); err != nil {
+			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
 				os.Remove(tmpFile.Name())
 				return "", err
 			}
@@ -356,7 +357,11 @@ func downloadToTemp(url string) (string, error) {
 
 func verifyChecksum(filePath, checksumURL string) error {
 	client := &http.Client{Timeout: checksumTimeout}
-	resp, err := client.Get(checksumURL)
+	req, err := http.NewRequestWithContext(context.Background(), "GET", checksumURL, http.NoBody)
+	if err != nil {
+		return err
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -410,7 +415,7 @@ func replaceExecutable(currentPath, newPath string) error {
 	}
 	defer newFile.Close()
 
-	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755)
+	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755) //nolint:gosec // executable permissions required
 	if err != nil {
 		os.Rename(backupPath, currentPath)
 		return err
@@ -429,7 +434,7 @@ func replaceExecutable(currentPath, newPath string) error {
 }
 
 func loadCache(path string) (cacheEntry, bool) {
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(path) //nolint:gosec // cache path is safe
 	if err != nil {
 		return cacheEntry{}, false
 	}
@@ -447,7 +452,7 @@ func loadCache(path string) (cacheEntry, bool) {
 }
 
 func saveCache(path string, entry cacheEntry) {
-	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil { //nolint:gosec // standard directory permissions
 		return
 	}
 
@@ -456,7 +461,7 @@ func saveCache(path string, entry cacheEntry) {
 		return
 	}
 
-	os.WriteFile(path, data, 0644)
+	os.WriteFile(path, data, 0o644)
 }
 
 func compareVersions(a, b string) int {

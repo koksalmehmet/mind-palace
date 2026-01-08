@@ -71,7 +71,7 @@ func (s *MCPServer) toolExploreContext(id any, args map[string]interface{}) json
 	var output strings.Builder
 	output.WriteString("# Context for Task\n\n")
 	fmt.Fprintf(&output, "**Task:** %s\n\n", task)
-	fmt.Fprintf(&output, "**Total Files:** %d\n\n", result.ContextResult.TotalFiles)
+	fmt.Fprintf(&output, "**Total Files:** %d\n\n", result.TotalFiles)
 
 	// Show learnings first (important context from session memory)
 	if len(result.Learnings) > 0 {
@@ -194,9 +194,9 @@ func (s *MCPServer) toolExploreContext(id any, args map[string]interface{}) json
 		output.WriteString("\n")
 	}
 
-	if len(result.ContextResult.Files) > 0 {
+	if len(result.Files) > 0 {
 		output.WriteString("## Relevant Files\n\n")
-		for _, f := range result.ContextResult.Files {
+		for _, f := range result.Files {
 			// Check for file intel warnings
 			fileWarning := ""
 			if result.FileIntel != nil {
@@ -248,7 +248,7 @@ func (s *MCPServer) toolExploreContext(id any, args map[string]interface{}) json
 		}
 	}
 
-	if len(result.ContextResult.Imports) > 0 {
+	if len(result.Imports) > 0 {
 		output.WriteString("## Import Relationships\n\n")
 		for _, imp := range result.Imports {
 			fmt.Fprintf(&output, "- `%s` imports `%s`\n", imp.SourceFile, imp.TargetFile)

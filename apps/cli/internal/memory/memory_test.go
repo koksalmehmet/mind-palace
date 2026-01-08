@@ -342,10 +342,8 @@ func TestConflictDetection(t *testing.T) {
 	}
 	if conflict == nil {
 		t.Error("Expected conflict but got nil")
-	} else {
-		if conflict.Path != "main.go" {
-			t.Errorf("Expected conflict path 'main.go', got '%s'", conflict.Path)
-		}
+	} else if conflict.Path != "main.go" {
+		t.Errorf("Expected conflict path 'main.go', got '%s'", conflict.Path)
 	}
 }
 

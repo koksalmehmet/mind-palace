@@ -344,7 +344,8 @@ func (m *Memory) findContradictionsByFTS(content string, opts ContradictionCheck
 
 	if opts.IncludeIdeas {
 		ideas, _ := m.SearchIdeas(content, opts.MaxCandidates)
-		for _, idea := range ideas {
+		for i := range ideas {
+			idea := &ideas[i]
 			candidates = append(candidates, RecordForAnalysis{
 				ID:        idea.ID,
 				Kind:      "idea",
@@ -358,7 +359,8 @@ func (m *Memory) findContradictionsByFTS(content string, opts ContradictionCheck
 
 	if opts.IncludeDecisions {
 		decisions, _ := m.SearchDecisions(content, opts.MaxCandidates)
-		for _, dec := range decisions {
+		for i := range decisions {
+			dec := &decisions[i]
 			candidates = append(candidates, RecordForAnalysis{
 				ID:        dec.ID,
 				Kind:      "decision",
@@ -440,7 +442,8 @@ func (m *Memory) GetContradictingRecords(recordID string) ([]RecordForAnalysis, 
 	}
 
 	var contradicting []RecordForAnalysis
-	for _, link := range links {
+	for i := range links {
+		link := &links[i]
 		if link.Relation != RelationContradicts {
 			continue
 		}
@@ -458,7 +461,8 @@ func (m *Memory) GetContradictingRecords(recordID string) ([]RecordForAnalysis, 
 		return contradicting, nil
 	}
 
-	for _, link := range incomingLinks {
+	for i := range incomingLinks {
+		link := &incomingLinks[i]
 		if link.Relation != RelationContradicts {
 			continue
 		}
@@ -507,7 +511,8 @@ func (m *Memory) GetContradictionSummary(limit int) (*ContradictionSummary, erro
 		return summary, err
 	}
 
-	for _, link := range links {
+	for i := range links {
+		link := &links[i]
 		source, _ := m.getRecordForAnalysis(link.SourceID, link.SourceKind)
 		target, _ := m.getRecordForAnalysis(link.TargetID, link.TargetKind)
 

@@ -320,10 +320,10 @@ func TestPathsFromSignal(t *testing.T) {
 	run("config", "user.name", "tester")
 
 	path := filepath.Join(dir, "file.txt")
-	os.WriteFile(path, []byte("v1"), 0644)
+	os.WriteFile(path, []byte("v1"), 0o644)
 	run("add", ".")
 	run("commit", "-m", "init")
-	os.WriteFile(path, []byte("v2"), 0644)
+	os.WriteFile(path, []byte("v2"), 0o644)
 	run("add", ".")
 	run("commit", "-m", "mod")
 
@@ -347,7 +347,7 @@ func TestPathsFromSignal(t *testing.T) {
 	}
 
 	// Test with mismatching diff range (should fallback to git diff)
-	paths, fromSignal, err = Paths(dir, "HEAD", config.Guardrails{})
+	_, fromSignal, err = Paths(dir, "HEAD", config.Guardrails{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -367,11 +367,11 @@ func TestGenerateErrors(t *testing.T) {
 func TestPathsFromSignalErrors(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, ".palace", "outputs")
-	os.MkdirAll(outDir, 0755)
+	os.MkdirAll(outDir, 0o755)
 
 	// Create invalid signal file
 	sigPath := filepath.Join(outDir, "change-signal.json")
-	os.WriteFile(sigPath, []byte("not valid json"), 0644)
+	os.WriteFile(sigPath, []byte("not valid json"), 0o644)
 
 	_, fromSignal, err := Paths(dir, "HEAD", config.Guardrails{})
 	if err == nil {
@@ -396,12 +396,12 @@ func TestPathsWithGuardrails(t *testing.T) {
 	run("config", "user.name", "t")
 
 	// Create an initial commit so HEAD is valid
-	os.WriteFile(filepath.Join(dir, "root"), []byte("root"), 0644)
+	os.WriteFile(filepath.Join(dir, "root"), []byte("root"), 0o644)
 	run("add", ".")
 	run("commit", "-m", "root")
 
 	// Add secret file and commit it
-	os.WriteFile(filepath.Join(dir, "secret.key"), []byte("key"), 0644)
+	os.WriteFile(filepath.Join(dir, "secret.key"), []byte("key"), 0o644)
 	run("add", ".")
 	run("commit", "-m", "secret")
 

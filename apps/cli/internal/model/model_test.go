@@ -129,7 +129,7 @@ func TestLoadContextPackInvalidJSON(t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "invalid.json")
 
-	if err := os.WriteFile(path, []byte("not valid json {"), 0644); err != nil {
+	if err := os.WriteFile(path, []byte("not valid json {"), 0o644); err != nil {
 		t.Fatalf("failed to create test file: %v", err)
 	}
 
@@ -172,7 +172,7 @@ func TestWriteContextPackNormalizesNils(t *testing.T) {
 }
 
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsImpl(s, substr))
+	return len(s) >= len(substr) && (s == substr || s != "" && containsImpl(s, substr))
 }
 
 func containsImpl(s, substr string) bool {

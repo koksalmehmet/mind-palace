@@ -109,7 +109,7 @@ func TestLoadCache(t *testing.T) {
 	t.Run("returns false for invalid JSON", func(t *testing.T) {
 		dir := t.TempDir()
 		path := filepath.Join(dir, "cache.json")
-		os.WriteFile(path, []byte("invalid json"), 0644)
+		os.WriteFile(path, []byte("invalid json"), 0o644)
 
 		_, ok := loadCache(path)
 		if ok {
@@ -126,7 +126,7 @@ func TestLoadCache(t *testing.T) {
 			CheckedAt:     time.Now().Add(-48 * time.Hour), // 48 hours ago
 		}
 		data, _ := json.Marshal(entry)
-		os.WriteFile(path, data, 0644)
+		os.WriteFile(path, data, 0o644)
 
 		_, ok := loadCache(path)
 		if ok {
@@ -143,7 +143,7 @@ func TestLoadCache(t *testing.T) {
 			CheckedAt:     time.Now(),
 		}
 		data, _ := json.Marshal(entry)
-		os.WriteFile(path, data, 0644)
+		os.WriteFile(path, data, 0o644)
 
 		result, ok := loadCache(path)
 		if !ok {
@@ -288,7 +288,7 @@ func TestConstants(t *testing.T) {
 }
 
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsHelper(s, substr))
+	return len(s) >= len(substr) && (s == substr || s != "" && containsHelper(s, substr))
 }
 
 func containsHelper(s, substr string) bool {
@@ -405,7 +405,7 @@ func TestVerifyChecksum(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "file.bin")
 	content := []byte("hello-world")
-	if err := os.WriteFile(path, content, 0644); err != nil {
+	if err := os.WriteFile(path, content, 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
@@ -428,7 +428,7 @@ func TestVerifyChecksum(t *testing.T) {
 func TestVerifyChecksumInvalidFormat(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "file.bin")
-	if err := os.WriteFile(path, []byte("content"), 0644); err != nil {
+	if err := os.WriteFile(path, []byte("content"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
@@ -516,7 +516,7 @@ func TestCheckCachedWithValidCache(t *testing.T) {
 		CheckedAt:     time.Now(),
 	}
 	data, _ := json.Marshal(entry)
-	os.WriteFile(cachePath, data, 0644)
+	os.WriteFile(cachePath, data, 0o644)
 
 	result, err := CheckCached("1.0.0", dir)
 	if err != nil {
@@ -539,7 +539,7 @@ func TestCheckCachedWithExpiredCache(t *testing.T) {
 		CheckedAt:     time.Now().Add(-48 * time.Hour), // Expired
 	}
 	data, _ := json.Marshal(entry)
-	os.WriteFile(cachePath, data, 0644)
+	os.WriteFile(cachePath, data, 0o644)
 
 	release := Release{
 		TagName: "v3.0.0",
@@ -565,13 +565,13 @@ func TestReplaceExecutable(t *testing.T) {
 
 	// Create "current" executable
 	currentPath := filepath.Join(dir, "current")
-	if err := os.WriteFile(currentPath, []byte("old-content"), 0755); err != nil {
+	if err := os.WriteFile(currentPath, []byte("old-content"), 0o755); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
 	// Create "new" executable
 	newPath := filepath.Join(dir, "new")
-	if err := os.WriteFile(newPath, []byte("new-content"), 0644); err != nil {
+	if err := os.WriteFile(newPath, []byte("new-content"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
@@ -600,7 +600,7 @@ func TestReplaceExecutableFailsIfCurrentMissing(t *testing.T) {
 	currentPath := filepath.Join(dir, "missing")
 	newPath := filepath.Join(dir, "new")
 
-	if err := os.WriteFile(newPath, []byte("new-content"), 0644); err != nil {
+	if err := os.WriteFile(newPath, []byte("new-content"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
@@ -615,7 +615,7 @@ func TestReplaceExecutableFailsIfNewMissing(t *testing.T) {
 	currentPath := filepath.Join(dir, "current")
 	newPath := filepath.Join(dir, "missing")
 
-	if err := os.WriteFile(currentPath, []byte("old-content"), 0755); err != nil {
+	if err := os.WriteFile(currentPath, []byte("old-content"), 0o755); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 

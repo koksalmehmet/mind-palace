@@ -213,12 +213,14 @@ func (m *Memory) GetRelevantLearnings(filePath, query string, limit int) ([]Lear
 		}
 		// Merge results, avoiding duplicates
 		seen := make(map[string]bool)
-		for _, l := range allLearnings {
+		for i := range allLearnings {
+			l := &allLearnings[i]
 			seen[l.ID] = true
 		}
-		for _, l := range searchResults {
+		for i := range searchResults {
+			l := &searchResults[i]
 			if !seen[l.ID] {
-				allLearnings = append(allLearnings, l)
+				allLearnings = append(allLearnings, *l)
 				seen[l.ID] = true
 			}
 		}

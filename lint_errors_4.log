@@ -1,0 +1,50 @@
+Lint: Go	golangci-lint	﻿2026-01-08T19:06:56.3385361Z ##[group]Run golangci/golangci-lint-action@v9
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3385687Z with:
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3385859Z   version: latest
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3386074Z   args: --timeout=5m ./apps/cli/...
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3386327Z   only-new-issues: true
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3386534Z   install-mode: binary
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3386735Z   install-only: false
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3387177Z   github-token: ***
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3387396Z   verify: true
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3387581Z   skip-cache: false
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3387777Z   skip-save-cache: false
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3388005Z   cache-invalidation-interval: 7
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3388249Z   problem-matchers: false
+Lint: Go	golangci-lint	2026-01-08T19:06:56.3388477Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T19:06:56.4875973Z ##[group]Restore cache
+Lint: Go	golangci-lint	2026-01-08T19:06:56.4880604Z Checking for go.mod: go.mod
+Lint: Go	golangci-lint	2026-01-08T19:06:56.4886761Z (node:2180) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Lint: Go	golangci-lint	2026-01-08T19:06:56.4888018Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Lint: Go	golangci-lint	2026-01-08T19:06:56.5823130Z Cache hit for: golangci-lint.cache-Linux-2923-b974cfb101ffe864b620c04f65c45fafc67e4e72
+Lint: Go	golangci-lint	2026-01-08T19:06:56.5939070Z (node:2180) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Lint: Go	golangci-lint	2026-01-08T19:06:56.6540466Z Received 453336 of 453336 (100.0%), 12.7 MBs/sec
+Lint: Go	golangci-lint	2026-01-08T19:06:56.6541220Z Cache Size: ~0 MB (453336 B)
+Lint: Go	golangci-lint	2026-01-08T19:06:56.6568623Z [command]/usr/bin/tar -xf /home/runner/work/_temp/85f2e910-6e8e-4e5c-851a-ae4f00030143/cache.tzst -P -C /home/runner/work/mind-palace/mind-palace --use-compress-program unzstd
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7622654Z Cache restored successfully
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7628451Z Restored cache for golangci-lint from key 'golangci-lint.cache-Linux-2923-b974cfb101ffe864b620c04f65c45fafc67e4e72' in 275ms
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7629919Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7630767Z ##[group]Install
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7632084Z Finding needed golangci-lint version...
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7901312Z Requested golangci-lint 'latest', using 'v2.8.0', calculation took 26ms
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7902032Z Installation mode: binary
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7902942Z Installing golangci-lint binary v2.8.0...
+Lint: Go	golangci-lint	2026-01-08T19:06:56.7904177Z Downloading binary https://github.com/golangci/golangci-lint/releases/download/v2.8.0/golangci-lint-2.8.0-linux-amd64.tar.gz ...
+Lint: Go	golangci-lint	2026-01-08T19:06:56.9572669Z [command]/usr/bin/tar xz --overwrite --warning=no-unknown-keyword --overwrite -C /home/runner -f /home/runner/work/_temp/7c8b1b3c-6673-453b-a685-739073285561
+Lint: Go	golangci-lint	2026-01-08T19:06:57.2607591Z Installed golangci-lint into /home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint in 470ms
+Lint: Go	golangci-lint	2026-01-08T19:06:57.2616286Z ##[endgroup]
+Lint: Go	golangci-lint	2026-01-08T19:06:57.2617717Z ##[group]run golangci-lint
+Lint: Go	golangci-lint	2026-01-08T19:06:57.5591345Z Writing patch to /tmp/tmp-2180-g4kRJ4UcUA1x/push.patch
+Lint: Go	golangci-lint	2026-01-08T19:06:57.5598265Z only new issues on push: /tmp/tmp-2180-g4kRJ4UcUA1x/push.patch
+Lint: Go	golangci-lint	2026-01-08T19:06:57.5600124Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint config path] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T19:06:57.6842527Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint config verify] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T19:06:57.8753199Z Running [/home/runner/golangci-lint-2.8.0-linux-amd64/golangci-lint run --new-from-patch=/tmp/tmp-2180-g4kRJ4UcUA1x/push.patch --new=false --new-from-rev= --new-from-merge-base= --timeout=5m ./apps/cli/...] in [/home/runner/work/mind-palace/mind-palace] ...
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9467294Z ##[error]apps/cli/internal/index/oracle.go:755:2: S1021: should merge variable declaration with assignment on next line (staticcheck)
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9476204Z 	var visit func(file string) error
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9476519Z 	^
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9476711Z 1 issues:
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9476900Z * staticcheck: 1
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9477476Z 
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9486409Z ##[error]issues found
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9487194Z Ran golangci-lint in 22068ms
+Lint: Go	golangci-lint	2026-01-08T19:07:19.9487634Z ##[endgroup]

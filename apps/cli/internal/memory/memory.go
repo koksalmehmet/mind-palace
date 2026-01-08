@@ -70,7 +70,7 @@ type FileIntel struct {
 // Open opens or creates the memory database at the given workspace root.
 func Open(root string) (*Memory, error) {
 	dbDir := filepath.Join(root, ".palace")
-	if err := os.MkdirAll(dbDir, 0755); err != nil {
+	if err := os.MkdirAll(dbDir, 0o755); err != nil {
 		return nil, fmt.Errorf("create .palace dir: %w", err)
 	}
 

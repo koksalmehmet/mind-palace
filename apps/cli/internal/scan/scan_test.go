@@ -37,7 +37,7 @@ func main() {
 	println("Hello")
 }
 `
-	if err := os.WriteFile(testFile, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(content), 0o644); err != nil {
 		t.Fatalf("failed to write test file: %v", err)
 	}
 
@@ -72,7 +72,7 @@ func TestRunIncrementalRequiresExistingIndex(t *testing.T) {
 
 	// Create minimal palace layout without index
 	palaceDir := filepath.Join(tmpDir, ".palace")
-	if err := os.MkdirAll(palaceDir, 0755); err != nil {
+	if err := os.MkdirAll(palaceDir, 0o755); err != nil {
 		t.Fatalf("failed to create palace dir: %v", err)
 	}
 
@@ -97,7 +97,7 @@ func TestRunIncrementalAfterFullScan(t *testing.T) {
 
 func main() {}
 `
-	if err := os.WriteFile(testFile, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte(content), 0o644); err != nil {
 		t.Fatalf("failed to write test file: %v", err)
 	}
 
@@ -130,7 +130,7 @@ func TestRunIncrementalDetectsNewFile(t *testing.T) {
 
 	// Create initial file
 	testFile := filepath.Join(tmpDir, "main.go")
-	if err := os.WriteFile(testFile, []byte("package main\n"), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte("package main\n"), 0o644); err != nil {
 		t.Fatalf("failed to write test file: %v", err)
 	}
 
@@ -142,7 +142,7 @@ func TestRunIncrementalDetectsNewFile(t *testing.T) {
 
 	// Add a new file
 	newFile := filepath.Join(tmpDir, "utils.go")
-	if err := os.WriteFile(newFile, []byte("package main\n\nfunc helper() {}\n"), 0644); err != nil {
+	if err := os.WriteFile(newFile, []byte("package main\n\nfunc helper() {}\n"), 0o644); err != nil {
 		t.Fatalf("failed to write new file: %v", err)
 	}
 
@@ -162,7 +162,7 @@ func TestRunIncrementalDetectsModifiedFile(t *testing.T) {
 
 	// Create initial file
 	testFile := filepath.Join(tmpDir, "main.go")
-	if err := os.WriteFile(testFile, []byte("package main\n"), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte("package main\n"), 0o644); err != nil {
 		t.Fatalf("failed to write test file: %v", err)
 	}
 
@@ -173,7 +173,7 @@ func TestRunIncrementalDetectsModifiedFile(t *testing.T) {
 	}
 
 	// Modify the file
-	if err := os.WriteFile(testFile, []byte("package main\n\nfunc main() {}\n"), 0644); err != nil {
+	if err := os.WriteFile(testFile, []byte("package main\n\nfunc main() {}\n"), 0o644); err != nil {
 		t.Fatalf("failed to modify file: %v", err)
 	}
 
@@ -194,10 +194,10 @@ func TestRunIncrementalDetectsDeletedFile(t *testing.T) {
 	// Create initial files
 	file1 := filepath.Join(tmpDir, "main.go")
 	file2 := filepath.Join(tmpDir, "utils.go")
-	if err := os.WriteFile(file1, []byte("package main\n"), 0644); err != nil {
+	if err := os.WriteFile(file1, []byte("package main\n"), 0o644); err != nil {
 		t.Fatalf("failed to write file1: %v", err)
 	}
-	if err := os.WriteFile(file2, []byte("package main\n"), 0644); err != nil {
+	if err := os.WriteFile(file2, []byte("package main\n"), 0o644); err != nil {
 		t.Fatalf("failed to write file2: %v", err)
 	}
 
@@ -230,7 +230,7 @@ func TestRunIncrementalFilesUnchangedCalculation(t *testing.T) {
 	for i, name := range []string{"a.go", "b.go", "c.go"} {
 		path := filepath.Join(tmpDir, name)
 		content := []byte("package main\n// file " + string(rune('a'+i)) + "\n")
-		if err := os.WriteFile(path, content, 0644); err != nil {
+		if err := os.WriteFile(path, content, 0o644); err != nil {
 			t.Fatalf("failed to write %s: %v", name, err)
 		}
 	}
@@ -243,7 +243,7 @@ func TestRunIncrementalFilesUnchangedCalculation(t *testing.T) {
 
 	// Modify one file, delete one file, add one file
 	// Modify a.go
-	if err := os.WriteFile(filepath.Join(tmpDir, "a.go"), []byte("package main\n// modified\n"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "a.go"), []byte("package main\n// modified\n"), 0o644); err != nil {
 		t.Fatalf("failed to modify a.go: %v", err)
 	}
 	// Delete b.go
@@ -251,7 +251,7 @@ func TestRunIncrementalFilesUnchangedCalculation(t *testing.T) {
 		t.Fatalf("failed to delete b.go: %v", err)
 	}
 	// Add d.go
-	if err := os.WriteFile(filepath.Join(tmpDir, "d.go"), []byte("package main\n// new\n"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "d.go"), []byte("package main\n// new\n"), 0o644); err != nil {
 		t.Fatalf("failed to write d.go: %v", err)
 	}
 
@@ -317,11 +317,11 @@ func TestIncrementalScanSummary(t *testing.T) {
 func TestRunIncrementalWithCorruptedDB(t *testing.T) {
 	tmpDir := t.TempDir()
 	palaceDir := filepath.Join(tmpDir, ".palace", "index")
-	if err := os.MkdirAll(palaceDir, 0755); err != nil {
+	if err := os.MkdirAll(palaceDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
 	dbPath := filepath.Join(palaceDir, "palace.db")
-	if err := os.WriteFile(dbPath, []byte("NOT A SQLITE DB"), 0644); err != nil {
+	if err := os.WriteFile(dbPath, []byte("NOT A SQLITE DB"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
@@ -335,23 +335,23 @@ func TestRunIncrementalDetectsMultipleChanges(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	// 1. Initial set: file-a.go, file-b.go
-	if err := os.WriteFile(filepath.Join(tmpDir, "file-a.go"), []byte("package a"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "file-a.go"), []byte("package a"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(tmpDir, "file-b.go"), []byte("package b"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "file-b.go"), []byte("package b"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
 	Run(tmpDir)
 
 	// 2. Change: modify a, delete b, add c
-	if err := os.WriteFile(filepath.Join(tmpDir, "file-a.go"), []byte("package a // mod"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "file-a.go"), []byte("package a // mod"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.Remove(filepath.Join(tmpDir, "file-b.go")); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(tmpDir, "file-c.go"), []byte("package c"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "file-c.go"), []byte("package c"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
@@ -370,7 +370,7 @@ func TestRunIncrementalWithMissingTable(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	// 1. Initial setup
-	if err := os.WriteFile(filepath.Join(tmpDir, "file.go"), []byte("package a"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "file.go"), []byte("package a"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	Run(tmpDir)

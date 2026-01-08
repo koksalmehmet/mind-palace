@@ -121,7 +121,7 @@ func NewLSPClient(config LSPClientConfig) (*LSPClient, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Build command
-	cmd := exec.CommandContext(ctx, serverPath, config.ServerArgs...)
+	cmd := exec.CommandContext(ctx, serverPath //nolint:gosec // command path is trusted, config.ServerArgs...)
 	cmd.Dir = config.RootPath
 
 	// Setup pipes
