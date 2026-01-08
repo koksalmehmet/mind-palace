@@ -8,7 +8,7 @@ import (
 // Parser Priority Strategy (IMPLEMENTED):
 //
 // 1. LSP-First: Use language servers when available (most accurate, semantic understanding)
-//    - Go: gopls ✅
+//    - Go: gopls (requires Go 1.20+, tested with gopls v0.13.0+)
 //    - TypeScript/JavaScript: typescript-language-server (planned)
 //    - Python: pyright, pylsp (planned)
 //    - Rust: rust-analyzer (planned)

@@ -14,18 +14,25 @@ import (
 	"github.com/koksalmehmet/mind-palace/apps/cli/internal/validate"
 )
 
+// resolveAndValidateRoot converts a path to absolute and verifies it exists.
+func resolveAndValidateRoot(root string) (string, error) {
+	rootPath, err := filepath.Abs(root)
+	if err != nil {
+		return "", err
+	}
+	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
+		return "", fmt.Errorf("directory does not exist: %s", rootPath)
+	}
+	return rootPath, nil
+}
+
 // RunIncremental performs an incremental scan, only processing changed files.
 // Returns the number of changes applied and an error if any.
 // If there are no changes, returns (0, nil).
 func RunIncremental(root string) (index.IncrementalScanSummary, error) {
-	rootPath, err := filepath.Abs(root)
+	rootPath, err := resolveAndValidateRoot(root)
 	if err != nil {
 		return index.IncrementalScanSummary{}, err
-	}
-
-	// Verify directory exists
-	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
-		return index.IncrementalScanSummary{}, fmt.Errorf("directory does not exist: %s", rootPath)
 	}
 
 	// Check if index exists - if not, need full scan
@@ -81,14 +88,9 @@ func RunIncremental(root string) (index.IncrementalScanSummary, error) {
 
 // Run performs a full scan of the workspace
 func Run(root string) (index.ScanSummary, int, error) {
-	rootPath, err := filepath.Abs(root)
+	rootPath, err := resolveAndValidateRoot(root)
 	if err != nil {
 		return index.ScanSummary{}, 0, err
-	}
-
-	// Verify directory exists
-	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
-		return index.ScanSummary{}, 0, fmt.Errorf("directory does not exist: %s", rootPath)
 	}
 
 	if _, err := config.EnsureLayout(rootPath); err != nil {

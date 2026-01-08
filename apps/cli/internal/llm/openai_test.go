@@ -138,11 +138,7 @@ func TestOpenAICompletion(t *testing.T) {
 
 			// Create client pointing to mock server
 			client := NewOpenAIClient("test-api-key", "gpt-4o-mini")
-			// Override base URL for testing
-			originalURL := openAIBaseURL
-			defer func() {
-				// Note: In production code, we'd need to make baseURL configurable
-			}()
+			_ = openAIBaseURL // Base URL is fixed; we use transport replacement instead
 
 			// We need to temporarily replace the client's http.Client to use our test server
 			client.client = &http.Client{
