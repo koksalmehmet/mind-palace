@@ -98,7 +98,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: apps/vscode
-        run: npm ci
+        run: npm install
 
       - name: Compile
         working-directory: apps/vscode
@@ -193,13 +193,13 @@ jobs:
       - name: Build Dashboard
         working-directory: apps/dashboard
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Build VS Code Extension
         working-directory: apps/vscode
         run: |
-          npm ci
+          npm install
           npm run compile
 
       - name: Download Dashboard Artifact
