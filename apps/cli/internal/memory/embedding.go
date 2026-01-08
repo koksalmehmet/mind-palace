@@ -275,7 +275,7 @@ func CosineSimilarity(a, b []float32) float32 {
 	return dotProduct / float32(math.Sqrt(float64(normA))*math.Sqrt(float64(normB)))
 }
 
-// FindSimilar finds the most similar embeddings to a query embedding.
+// SimilarityResult represents a record with its similarity score to a query.
 type SimilarityResult struct {
 	RecordID   string  `json:"recordId"`
 	RecordKind string  `json:"recordKind"`

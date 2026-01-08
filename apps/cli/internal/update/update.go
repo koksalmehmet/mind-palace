@@ -94,7 +94,7 @@ func Check(currentVersion string) (*CheckResult, error) {
 }
 
 // CheckCached performs an update check, using a local cache if it's still valid.
-func CheckCached(currentVersion string, cacheDir string) (*CheckResult, error) {
+func CheckCached(currentVersion, cacheDir string) (*CheckResult, error) {
 	cachePath := filepath.Join(cacheDir, cacheFileName)
 	if cached, ok := loadCache(cachePath); ok {
 		currentClean := strings.TrimPrefix(currentVersion, "v")
@@ -273,7 +273,7 @@ func extractFromTarGz(archivePath, binaryName string) (string, error) {
 				return "", err
 			}
 
-			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil {
+			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // G302: executable requires 0755 permissions
 				tmpFile.Close()
 				os.Remove(tmpFile.Name())
 				return "", err
@@ -321,7 +321,7 @@ func extractZipFile(f *zip.File) (string, error) {
 		return "", err
 	}
 
-	if err := os.Chmod(tmpFile.Name(), 0o755); err != nil {
+	if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // G302: executable requires 0755 permissions
 		os.Remove(tmpFile.Name())
 		return "", err
 	}
@@ -419,7 +419,7 @@ func replaceExecutable(currentPath, newPath string) error {
 	}
 	defer newFile.Close()
 
-	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
+	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755) //nolint:gosec // G302: executable requires 0755 permissions
 	if err != nil {
 		os.Rename(backupPath, currentPath)
 		return err

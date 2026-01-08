@@ -29,7 +29,7 @@ type DartLSPClient struct {
 	cancel    context.CancelFunc
 }
 
-// LSP types for call hierarchy
+// Position represents a position in a text document (LSP types for call hierarchy).
 type Position struct {
 	Line      int `json:"line"`
 	Character int `json:"character"`
@@ -89,7 +89,7 @@ func NewDartLSPClient(rootPath string) (*DartLSPClient, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	cmd := exec.CommandContext(ctx, dartPath, "language-server", "--client-id=mind-palace", "--client-version=1.0.0")
+	cmd := exec.CommandContext(ctx, dartPath, "language-server", "--client-id=mind-palace", "--client-version=1.0.0") //nolint:gosec // G204: dartPath comes from exec.LookPath which is trusted
 	cmd.Dir = rootPath
 
 	stdin, err := cmd.StdinPipe()

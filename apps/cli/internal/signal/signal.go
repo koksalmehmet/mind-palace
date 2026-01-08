@@ -18,7 +18,7 @@ import (
 	"github.com/koksalmehmet/mind-palace/apps/cli/internal/validate"
 )
 
-func Generate(root string, diffRange string) (model.ChangeSignal, error) {
+func Generate(root, diffRange string) (model.ChangeSignal, error) {
 	if strings.TrimSpace(diffRange) == "" {
 		return model.ChangeSignal{}, errors.New("signal requires --diff range")
 	}

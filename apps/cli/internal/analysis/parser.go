@@ -184,7 +184,8 @@ func (r *ParserRegistry) GetParser(lang Language) (Parser, bool) {
 		}
 
 		// Check if LSP parser is available
-		if lspParser, ok := entry.parser.(LSPParser); ok {
+		lspParser, ok := entry.parser.(LSPParser) //nolint:nestif // acceptable complexity for parser selection logic
+		if ok {
 			if !lspParser.IsAvailable() {
 				if r.debugMode {
 					fmt.Printf("[DEBUG] LSP parser for %s not available, trying fallback\n", lang)
@@ -241,8 +242,9 @@ func (r *ParserRegistry) Parse(content []byte, filePath string) (*FileAnalysis, 
 	analysis, err := parser.Parse(content, filePath)
 
 	// If LSP parser failed, try fallback
-	if err != nil {
-		if lspParser, ok := parser.(LSPParser); ok && lspParser.IsAvailable() {
+	if err != nil { //nolint:nestif // acceptable complexity for fallback logic
+		lspParser, ok := parser.(LSPParser)
+		if ok && lspParser.IsAvailable() {
 			if r.debugMode {
 				fmt.Printf("[DEBUG] LSP parser failed for %s: %v, trying fallback\n", lang, err)
 			}

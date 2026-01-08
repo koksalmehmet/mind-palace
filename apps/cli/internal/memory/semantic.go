@@ -170,8 +170,7 @@ func (m *Memory) getRecordScope(id, kind string) (string, string) {
 	return scope, scopePath
 }
 
-// HybridSearch combines FTS5 keyword search with semantic search.
-// Returns results that match either keyword or semantic criteria.
+// HybridSearchResult contains results from combined keyword and semantic search.
 type HybridSearchResult struct {
 	SemanticSearchResult
 	MatchType string  `json:"matchType"` // "keyword", "semantic", "both"

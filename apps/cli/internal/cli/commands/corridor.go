@@ -24,17 +24,15 @@ func init() {
 // RunCorridor is the main entry point for the corridor command
 func RunCorridor(args []string) error {
 	if len(args) == 0 {
-		return errors.New(`usage: palace corridor <subcommand> [options]
-
-Subcommands:
-  list      List linked workspaces
-  link      Link another workspace
-  unlink    Remove a workspace link
-  personal  Show personal corridor learnings
-  promote   Promote a learning to personal corridor
-  search    Search across all corridors
-
-Run 'palace corridor <subcommand> --help' for subcommand help.`)
+		return errors.New("usage: palace corridor <subcommand> [options]\n\n" +
+			"Subcommands:\n" +
+			"  list      List linked workspaces\n" +
+			"  link      Link another workspace\n" +
+			"  unlink    Remove a workspace link\n" +
+			"  personal  Show personal corridor learnings\n" +
+			"  promote   Promote a learning to personal corridor\n" +
+			"  search    Search across all corridors\n\n" +
+			"Run 'palace corridor <subcommand> --help' for subcommand help.")
 	}
 
 	switch args[0] {

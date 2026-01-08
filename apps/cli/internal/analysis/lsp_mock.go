@@ -27,7 +27,7 @@ func NewMockLSPClient() *MockLSPClient {
 	}
 
 	// Default implementation returns empty symbols
-	mock.DocumentSymbolsFunc = func(uri string, content string) ([]LSPDocumentSymbol, error) {
+	mock.DocumentSymbolsFunc = func(_ string, _ string) ([]LSPDocumentSymbol, error) {
 		return []LSPDocumentSymbol{}, nil
 	}
 
@@ -109,7 +109,7 @@ func (f *MockLSPClientFactory) GetClient(serverCmd, rootPath string) *MockLSPCli
 
 // WithDocumentSymbols configures the mock to return specific symbols
 func (m *MockLSPClient) WithDocumentSymbols(symbols []LSPDocumentSymbol) *MockLSPClient {
-	m.DocumentSymbolsFunc = func(uri string, content string) ([]LSPDocumentSymbol, error) {
+	m.DocumentSymbolsFunc = func(_ string, _ string) ([]LSPDocumentSymbol, error) {
 		return symbols, nil
 	}
 	return m
@@ -117,7 +117,7 @@ func (m *MockLSPClient) WithDocumentSymbols(symbols []LSPDocumentSymbol) *MockLS
 
 // WithError configures the mock to return an error
 func (m *MockLSPClient) WithError(err error) *MockLSPClient {
-	m.DocumentSymbolsFunc = func(uri string, content string) ([]LSPDocumentSymbol, error) {
+	m.DocumentSymbolsFunc = func(_ string, _ string) ([]LSPDocumentSymbol, error) {
 		return nil, err
 	}
 	return m

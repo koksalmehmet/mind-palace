@@ -59,7 +59,7 @@ func (p *DartParser) extractSymbols(lines []string, analysis *FileAnalysis) {
 		startLine int
 		endLine   int
 	}
-	var blocks []blockInfo
+	blocks := make([]blockInfo, 0, 10) // preallocate for typical file
 
 	// Extract classes
 	for _, match := range dartClassRegex.FindAllStringSubmatchIndex(fullContent, -1) {

@@ -1,3 +1,4 @@
+// Package collect implements context collection from the palace index.
 package collect
 
 import (
@@ -18,16 +19,19 @@ import (
 	"github.com/koksalmehmet/mind-palace/apps/cli/internal/validate"
 )
 
+// Options configures the context collection behavior.
 type Options struct {
 	AllowStale bool
 }
 
+// Result contains the output of context collection.
 type Result struct {
 	ContextPack      model.ContextPack
 	CorridorWarnings []string
 }
 
-func Run(root string, diffRange string, opts Options) (Result, error) {
+// Run collects context from the palace index for the given root and diff range.
+func Run(root, diffRange string, opts Options) (Result, error) {
 	rootPath, err := filepath.Abs(root)
 	if err != nil {
 		return Result{}, err

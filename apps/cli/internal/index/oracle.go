@@ -598,7 +598,7 @@ func truncateSnippet(s string, maxLen int) string {
 	return s[:maxLen] + "..."
 }
 
-// GetImpact returns the impact analysis for a file or symbol
+// ImpactResult contains the impact analysis for a file or symbol.
 type ImpactResult struct {
 	Target       string       `json:"target"`
 	Dependents   []string     `json:"dependents"`
@@ -741,7 +741,7 @@ func ListExportedSymbols(db *sql.DB, filePath string) ([]SymbolInfo, error) {
 	return symbols, rows.Err()
 }
 
-// GetDependencyGraph returns the import graph for a set of files
+// DependencyNode represents a node in the import dependency graph.
 type DependencyNode struct {
 	File     string   `json:"file"`
 	Language string   `json:"language"`

@@ -105,7 +105,7 @@ func (p *EmbeddingPipeline) Enqueue(recordID, kind, content string) {
 }
 
 // worker processes embedding jobs from the queue.
-func (p *EmbeddingPipeline) worker(id int) {
+func (p *EmbeddingPipeline) worker(_ int) {
 	defer p.wg.Done()
 
 	for {

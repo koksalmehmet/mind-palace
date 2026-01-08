@@ -112,7 +112,7 @@ func ListFiles(root string, guardrails config.Guardrails) ([]string, error) {
 	return files, nil
 }
 
-func ChunkContent(content string, maxLines int, maxBytes int) []Chunk {
+func ChunkContent(content string, maxLines, maxBytes int) []Chunk {
 	if maxLines <= 0 {
 		maxLines = 120
 	}

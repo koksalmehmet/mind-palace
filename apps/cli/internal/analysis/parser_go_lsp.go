@@ -87,7 +87,7 @@ func (p *GoLSPParser) Parse(content []byte, filePath string) (*FileAnalysis, err
 
 // convertSymbols recursively converts LSP document symbols to our Symbol format
 func (p *GoLSPParser) convertSymbols(lspSymbols []LSPDocumentSymbol, content []byte) []Symbol {
-	var symbols []Symbol
+	symbols := make([]Symbol, 0, len(lspSymbols))
 
 	for i := range lspSymbols {
 		symbol := p.convertSymbol(lspSymbols[i], content)

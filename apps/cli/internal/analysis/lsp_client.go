@@ -42,7 +42,7 @@ type LSPClientConfig struct {
 	Timeout    time.Duration // Request timeout (default: 5s)
 }
 
-// LSP document symbol types
+// LSPSymbolKind represents the kind of a symbol (LSP document symbol types).
 type LSPSymbolKind int
 
 const (
@@ -121,7 +121,7 @@ func NewLSPClient(config LSPClientConfig) (*LSPClient, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Build command
-	cmd := exec.CommandContext(ctx, serverPath, config.ServerArgs...)
+	cmd := exec.CommandContext(ctx, serverPath, config.ServerArgs...) //nolint:gosec // G204: serverPath comes from exec.LookPath which is trusted
 	cmd.Dir = config.RootPath
 
 	// Setup pipes
