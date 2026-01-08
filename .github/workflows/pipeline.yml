@@ -187,7 +187,7 @@ jobs:
   deploy-docs:
     name: "Deploy: Docs"
     needs: check
-    if: github.event_name != 'pull_request' && (needs.check.outputs.docs_changed == 'true' || needs.check.outputs.release_needed == 'true')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.check.outputs.docs_changed == 'true' || needs.check.outputs.release_needed == 'true')
     runs-on: ubuntu-latest
     environment:
       name: production-docs
@@ -223,7 +223,8 @@ jobs:
     needs: [check, deploy-docs]
     if: |
       always() &&
-      github.event_name != 'pull_request' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' &&
       needs.check.result == 'success' &&
       needs.check.outputs.release_needed == 'true' &&
       (needs.deploy-docs.result == 'success' || needs.deploy-docs.result == 'skipped')
@@ -256,7 +257,8 @@ jobs:
     needs: [check, deploy-docs]
     if: |
       always() &&
-      github.event_name != 'pull_request' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' &&
       needs.check.result == 'success' &&
       needs.check.outputs.release_needed == 'true' &&
       (needs.deploy-docs.result == 'success' || needs.deploy-docs.result == 'skipped')
@@ -287,7 +289,8 @@ jobs:
     needs: [check, deploy-docs, release-dashboard]
     if: |
       always() &&
-      github.event_name != 'pull_request' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' &&
       needs.check.result == 'success' &&
       needs.check.outputs.release_needed == 'true' &&
       needs.release-dashboard.result == 'success'
