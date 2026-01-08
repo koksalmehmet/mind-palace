@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	_ "modernc.org/sqlite"
+	_ "modernc.org/sqlite" // sqlite driver for database/sql
 
 	"github.com/koksalmehmet/mind-palace/apps/cli/internal/analysis"
 	"github.com/koksalmehmet/mind-palace/apps/cli/internal/config"
