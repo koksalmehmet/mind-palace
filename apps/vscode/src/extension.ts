@@ -15,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   const bridge = new PalaceBridge();
   const hud = new PalaceHUD();
   const decorator = new PalaceDecorator();
+  decorator.activate(context);
 
   // Initialize registries
   const viewRegistry = new ViewRegistry(bridge, context.extensionUri);

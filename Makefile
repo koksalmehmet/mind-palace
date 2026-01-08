@@ -47,8 +47,8 @@ help:
 build: build-dashboard build-vscode build-palace
 	@echo "Build complete!"
 
-# Build palace CLI
-build-palace:
+# Build palace CLI (depends on dashboard being built)
+build-palace: build-dashboard
 	@echo "Building palace CLI..."
 	go build $(LDFLAGS) -o palace ./apps/cli
 

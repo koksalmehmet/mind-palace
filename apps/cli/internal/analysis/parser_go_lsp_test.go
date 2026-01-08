@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 package analysis
 
 import (
@@ -6,6 +9,9 @@ import (
 	"path/filepath"
 	"testing"
 )
+
+// These are integration tests that require gopls to be installed
+// Run with: go test -tags=integration ./internal/analysis
 
 // Sample Go code for testing
 const testGoCode = `package main
@@ -90,6 +96,10 @@ func TestGoLSPParser_Language(t *testing.T) {
 }
 
 func TestGoLSPParser_Parse(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping integration test in short mode")
+	}
+
 	parser := NewGoLSPParser("")
 
 	if !parser.IsAvailable() {
@@ -197,6 +207,10 @@ func TestGoLSPParser_Parse(t *testing.T) {
 }
 
 func TestGoLSPParser_ParseWithErrors(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping integration test in short mode")
+	}
+
 	parser := NewGoLSPParser("")
 
 	if !parser.IsAvailable() {
@@ -231,6 +245,10 @@ func broken( {
 }
 
 func TestGoLSPParser_ExportedSymbols(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping integration test in short mode")
+	}
+
 	parser := NewGoLSPParser("")
 
 	if !parser.IsAvailable() {
@@ -276,6 +294,10 @@ var privateVar = "private"
 }
 
 func TestGoLSPParser_ComplexStructures(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping integration test in short mode")
+	}
+
 	parser := NewGoLSPParser("")
 
 	if !parser.IsAvailable() {
@@ -380,6 +402,9 @@ func BenchmarkGoLSPParser_Parse(b *testing.B) {
 
 // TestGoLSPParser_CompareWithTreeSitter compares LSP and tree-sitter results
 func TestGoLSPParser_CompareWithTreeSitter(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping integration test in short mode")
+	}
 	lspParser := NewGoLSPParser("")
 	tsParser := NewGoParser()
 

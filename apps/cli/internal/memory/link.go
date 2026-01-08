@@ -321,8 +321,8 @@ func ParseCodeTarget(target string) (*CodeTarget, error) {
 		result.FilePath = target
 	}
 
-	// Normalize path
-	result.FilePath = filepath.Clean(result.FilePath)
+	// Normalize path and convert to forward slashes for consistency across platforms
+	result.FilePath = filepath.ToSlash(filepath.Clean(result.FilePath))
 
 	return result, nil
 }

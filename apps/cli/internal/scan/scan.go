@@ -23,6 +23,11 @@ func RunIncremental(root string) (index.IncrementalScanSummary, error) {
 		return index.IncrementalScanSummary{}, err
 	}
 
+	// Verify directory exists
+	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
+		return index.IncrementalScanSummary{}, fmt.Errorf("directory does not exist: %s", rootPath)
+	}
+
 	// Check if index exists - if not, need full scan
 	dbPath := filepath.Join(rootPath, ".palace", "index", "palace.db")
 	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
@@ -80,6 +85,12 @@ func Run(root string) (index.ScanSummary, int, error) {
 	if err != nil {
 		return index.ScanSummary{}, 0, err
 	}
+
+	// Verify directory exists
+	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
+		return index.ScanSummary{}, 0, fmt.Errorf("directory does not exist: %s", rootPath)
+	}
+
 	if _, err := config.EnsureLayout(rootPath); err != nil {
 		return index.ScanSummary{}, 0, err
 	}

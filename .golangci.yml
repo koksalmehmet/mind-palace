@@ -1,0 +1,334 @@
+# golangci-lint configuration for Mind Palace CLI
+# Go version: 1.25 (bleeding edge, aligned with go.mod)
+# Project type: CLI tool with parsers, MCP server, SQLite database, memory management
+# Updated: January 2026
+# Format: golangci-lint v1.64+
+
+run:
+  timeout: 5m
+  issues-exit-code: 1
+  tests: true
+
+linters:
+  enable:
+    # ============================================================================
+    # PHASE 1: Critical linters (enable immediately)
+    # ============================================================================
+    
+    # Error handling & bugs
+    - errcheck        # Unchecked errors
+    - govet           # Go vet (standard tool)
+    - staticcheck     # Comprehensive static analysis (replacement for megacheck)
+    - gosimple        # Simplify code
+    - ineffassign     # Detect ineffectual assignments
+    - unused          # Detect unused constants, variables, functions
+    
+    # SQL-specific (critical for SQLite usage)
+    - sqlclosecheck   # SQL rows/stmt Close() calls
+    - rowserrcheck    # SQL rows.Err() checks
+    
+    # Common mistakes
+    - typecheck       # Type checking
+    - bodyclose       # HTTP response body close
+    - contextcheck    # Context cancellation
+    - errname         # Error naming conventions
+    - errorlint       # Error wrapping with %w
+    - nilerr          # Return nil error
+    
+    # ============================================================================
+    # PHASE 2: Important code quality linters
+    # ============================================================================
+    
+    # Code complexity
+    - gocognit        # Cognitive complexity (better than gocyclo)
+    - gocyclo         # Cyclomatic complexity
+    - nestif          # Deeply nested if statements
+    
+    # Performance
+    - prealloc        # Slice preallocation
+    - unconvert       # Unnecessary type conversions
+    
+    # Style & best practices
+    - gofmt           # Gofmt checks
+    - goimports       # Goimports (import organization)
+    - misspell        # Spelling mistakes
+    - revive          # Fast, configurable, extensible linter (replaces golint)
+    - stylecheck      # Stylecheck (replacement for golint)
+    
+    # ============================================================================
+    # PHASE 3: Enhanced safety & maintainability
+    # ============================================================================
+    
+    # Potential bugs
+    - copyloopvar     # Loop variable copying (Go 1.22+ loop semantics)
+    - durationcheck   # Duration multiplication/division
+    - noctx           # HTTP requests without context
+    - nolintlint      # Nolint directive validation
+    - predeclared     # Shadowing of predeclared identifiers
+    - reassign        # Reassigning to function parameters
+    - unconvert       # Unnecessary type conversions
+    - unparam         # Unused function parameters
+    - wastedassign    # Wasted assignments
+    
+    # Security
+    - gosec           # Security issues
+    
+    # Concurrency (important for goroutines in butler, LSP, embedding pipeline)
+    - gocritic        # Comprehensive Go critique (includes concurrency checks)
+    
+    # Testing
+    - testifylint     # Testify assertions (project uses testify)
+    - tparallel       # Incorrect usage of t.Parallel()
+    
+    # ============================================================================
+    # PHASE 4: Optional strict linters (enable progressively)
+    # ============================================================================
+    
+    # These are commented out initially but can be enabled as code matures
+    # - exhaustive      # Exhaustive switch/map checks
+    # - exhaustruct     # Exhaustive struct initialization
+    # - forcetypeassert # Force type assertions to have error checks
+    # - funlen          # Function length
+    # - gochecknoglobals # Global variables
+    # - gochecknoinits  # Init functions
+    # - godox           # TODO/FIXME/XXX comments
+    # - goerr113        # Error wrapping style
+    # - gomnd           # Magic numbers (now called mnd)
+    # - mnd             # Magic numbers detection
+    # - ireturn         # Accept interfaces, return structs
+    # - nilnil          # Return nil, nil pattern
+    # - nonamedreturns  # Named return values
+    # - varnamelen      # Variable name length
+    # - wrapcheck       # Error wrapping
+
+linters-settings:
+  # Error checking
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+    exclude-functions:
+      - (io.Closer).Close
+      - (*os.File).Close
+      - (io.ReadCloser).Close
+      - (*database/sql.DB).Close
+      - (*database/sql.Rows).Close
+      - (*database/sql.Stmt).Close
+  
+  # Go vet
+  govet:
+    enable-all: true
+    disable:
+      - shadow  # Too noisy, enable later if needed
+      - fieldalignment  # Micro-optimization, not critical
+  
+  # Staticcheck
+  staticcheck:
+    checks: 
+      - "all"
+      - "-SA1019"  # Allow deprecated usage (for graceful migration)
+  
+  # Cognitive complexity
+  gocognit:
+    min-complexity: 25  # Reasonable for parser/butler logic
+  
+  # Cyclomatic complexity
+  gocyclo:
+    min-complexity: 20  # Balanced threshold
+  
+  # Nested if depth
+  nestif:
+    min-complexity: 5
+  
+  # Revive (golint replacement)
+  revive:
+    confidence: 0.8
+    rules:
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: dot-imports
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+        arguments:
+          - "checkPrivateReceivers"
+          - "sayRepetitiveInsteadOfStutters"
+      - name: if-return
+      - name: increment-decrement
+      - name: var-naming
+      - name: var-declaration
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: indent-error-flow
+      - name: errorf
+      - name: empty-block
+      - name: superfluous-else
+      - name: unused-parameter
+      - name: unreachable-code
+      - name: redefines-builtin-id
+  
+  # Style check
+  stylecheck:
+    checks: 
+      - "all"
+      - "-ST1000"  # Package comment can be relaxed
+      - "-ST1003"  # Underscores in names (some MCP/JSON field names need them)
+  
+  # Gocritic - comprehensive critique
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - whyNoLint         # Too strict
+      - unnamedResult     # Named returns are sometimes useful
+      - hugeParam         # Can be noisy for parsers
+  
+  # Security
+  gosec:
+    severity: medium
+    confidence: medium
+    excludes:
+      - G104  # Duplicates errcheck
+      - G307  # File Close() in defer (covered by errcheck)
+    config:
+      global:
+        nosec: true  # Allow nosec comments
+        audit: true
+  
+  # Misspell
+  misspell:
+    locale: US
+    ignore-words:
+      - "colour"  # In case of UK spelling in docs
+  
+  # Unused parameters
+  unparam:
+    check-exported: false  # Don't check exported functions
+  
+  # Testify
+  testifylint:
+    enable-all: true
+    disable:
+      - float-compare  # Sometimes needed for exact comparisons
+  
+  # Prealloc
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: true
+
+issues:
+  # Exclude specific directories
+  exclude-dirs:
+    - vendor
+    - node_modules
+    - apps/dashboard
+    - apps/docs
+    - apps/vscode
+    - scripts
+    - packaging
+  
+  # Exclude specific files
+  exclude-files:
+    - ".*\\.pb\\.go$"
+    - ".*_generated\\.go$"
+  
+  # Maximum issues count per one linter
+  max-issues-per-linter: 0
+  
+  # Maximum count of issues with the same text
+  max-same-issues: 0
+  
+  # Show all issues
+  new: false
+  
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Test files - relax certain checks
+    - path: _test\.go
+      linters:
+        - gocognit
+        - gocyclo
+        - errcheck
+        - gocritic
+        - gosec
+        - funlen
+        - dupl
+    
+    # Generated schemas
+    - path: apps/cli/schemas/
+      linters:
+        - all
+    
+    # Starter templates (example code)
+    - path: apps/cli/starter/
+      linters:
+        - errcheck
+        - gosec
+    
+    # Allow errors package wrapping patterns
+    - text: "do not define dynamic errors, use wrapped static errors instead"
+      linters:
+        - goerr113
+    
+    # Allow some complexity in parsers
+    - path: apps/cli/internal/analysis/parser_.*\.go
+      linters:
+        - gocognit
+        - gocyclo
+    
+    # Allow some complexity in index/scan
+    - path: apps/cli/internal/(index|scan)/
+      linters:
+        - gocognit
+        - gocyclo
+    
+    # Allow some complexity in butler (orchestration layer)
+    - path: apps/cli/internal/butler/
+      linters:
+        - gocognit
+    
+    # Allow context.Background() in main/init
+    - path: apps/cli/main.go
+      text: "context.Background"
+      linters:
+        - contextcheck
+    
+    # SQL close checks are handled by sqlclosecheck
+    - text: "Close` is not checked"
+      source: ".*\\.Close\\(\\)"
+      linters:
+        - errcheck
+    
+    # Allow some magic numbers in tests
+    - path: _test\.go
+      text: "mnd: Magic number"
+      linters:
+        - mnd
+        - gomnd
+  
+  # Fix issues automatically if possible
+  fix: false
+
+severity:
+  # Set the default severity for issues
+  default-severity: error
+  
+  # Rules to adjust severity
+  rules:
+    - linters:
+        - misspell
+        - stylecheck
+      severity: warning
+    
+    - linters:
+        - gosec
+      severity: warning

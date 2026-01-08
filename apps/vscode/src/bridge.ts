@@ -3,6 +3,7 @@ import * as vscode from "vscode";
 import * as util from "util";
 import * as readline from "readline";
 import { createCache, LRUCache } from "./services/cache";
+import { SafeOutputChannel } from "./services/logger";
 
 const exec = util.promisify(cp.exec);
 
@@ -275,7 +276,7 @@ class MCPClient {
     reject: (error: Error) => void;
     timeout: NodeJS.Timeout;
   }>({ maxSize: 100 });
-  private channel: vscode.OutputChannel;
+  private channel: SafeOutputChannel;
   private isConnected = false;
   private restartAttempts = 0;
   private maxRestartAttempts = 3;
@@ -284,7 +285,7 @@ class MCPClient {
   private lineBuffer = "";
 
   constructor(
-    channel: vscode.OutputChannel,
+    channel: SafeOutputChannel,
     onConnectionChange?: (connected: boolean) => void
   ) {
     this.channel = channel;
@@ -500,13 +501,14 @@ class MCPClient {
 }
 
 export class PalaceBridge {
-  private channel: vscode.OutputChannel;
+  private channel: SafeOutputChannel;
   private mcpClient: MCPClient;
   private _onConnectionChange = new vscode.EventEmitter<boolean>();
   public readonly onConnectionChange = this._onConnectionChange.event;
 
   constructor() {
-    this.channel = vscode.window.createOutputChannel("Mind Palace");
+    const rawChannel = vscode.window.createOutputChannel("Mind Palace");
+    this.channel = new SafeOutputChannel(rawChannel);
     this.mcpClient = new MCPClient(this.channel, (connected) => {
       this._onConnectionChange.fire(connected);
     });

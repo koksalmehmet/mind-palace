@@ -42,29 +42,6 @@ type LSPClientConfig struct {
 	Timeout    time.Duration // Request timeout (default: 5s)
 }
 
-// LSP protocol message types
-type lspRequest struct {
-	JSONRPC string      `json:"jsonrpc"`
-	ID      int64       `json:"id"`
-	Method  string      `json:"method"`
-	Params  interface{} `json:"params,omitempty"`
-}
-
-type lspResponse struct {
-	JSONRPC string          `json:"jsonrpc"`
-	ID      int64           `json:"id,omitempty"`
-	Method  string          `json:"method,omitempty"`
-	Result  json.RawMessage `json:"result,omitempty"`
-	Error   *lspError       `json:"error,omitempty"`
-	Params  json.RawMessage `json:"params,omitempty"`
-}
-
-type lspError struct {
-	Code    int             `json:"code"`
-	Message string          `json:"message"`
-	Data    json.RawMessage `json:"data,omitempty"`
-}
-
 // LSP document symbol types
 type LSPSymbolKind int
 
@@ -496,25 +473,6 @@ func (c *LSPClient) sendNotification(method string, params interface{}) error {
 	}
 
 	return nil
-}
-
-// pathToURI converts a file path to a file:// URI
-func pathToURI(path string) string {
-	absPath, err := filepath.Abs(path)
-	if err != nil {
-		absPath = path
-	}
-	// Convert Windows path separators to forward slashes
-	absPath = filepath.ToSlash(absPath)
-	return "file:///" + strings.TrimPrefix(absPath, "/")
-}
-
-// uriToPath converts a file:// URI to a file path
-func uriToPath(uri string) string {
-	path := strings.TrimPrefix(uri, "file:///")
-	path = strings.TrimPrefix(path, "file://")
-	// Convert forward slashes back to OS-specific separators
-	return filepath.FromSlash(path)
 }
 
 // ConvertLSPSymbolKind converts LSP SymbolKind to our internal SymbolKind

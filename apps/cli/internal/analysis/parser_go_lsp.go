@@ -306,11 +306,3 @@ func (p *GoLSPParser) extractCallsFromLine(line string, lineNum int, analysis *F
 		i++
 	}
 }
-
-// isExported checks if a Go symbol is exported (starts with uppercase)
-func isExported(name string) bool {
-	if len(name) == 0 {
-		return false
-	}
-	return unicode.IsUpper(rune(name[0]))
-}

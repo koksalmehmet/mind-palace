@@ -207,7 +207,7 @@ interface SearchResult {
             <!-- Results -->
             @if (searchQuery && !searching() && hasResults()) {
             <!-- Symbols -->
-            @if (results().symbols?.length) {
+            @if (results().symbols.length) {
             <div class="result-section">
               <div class="result-section-header">
                 <svg
@@ -255,7 +255,7 @@ interface SearchResult {
             }
 
             <!-- Learnings -->
-            @if (results().learnings?.length) {
+            @if (results().learnings.length) {
             <div class="result-section">
               <div class="result-section-header">
                 <svg
@@ -277,11 +277,11 @@ interface SearchResult {
               <div
                 class="result-item"
                 [class.selected]="
-                  selectedIndex() === (results().symbols?.length || 0) + i
+                  selectedIndex() === (results().symbols.length || 0) + i
                 "
                 (click)="navigateToLearning(learning)"
                 (mouseenter)="
-                  selectedIndex.set((results().symbols?.length || 0) + i)
+                  selectedIndex.set((results().symbols.length || 0) + i)
                 "
               >
                 <div class="result-icon learning-icon">
@@ -312,7 +312,7 @@ interface SearchResult {
             }
 
             <!-- Corridor (Personal Learnings) -->
-            @if (results().corridor?.length) {
+            @if (results().corridor.length) {
             <div class="result-section">
               <div class="result-section-header">
                 <svg
@@ -336,15 +336,15 @@ interface SearchResult {
                 class="result-item"
                 [class.selected]="
                   selectedIndex() ===
-                  (results().symbols?.length || 0) +
-                    (results().learnings?.length || 0) +
+                  (results().symbols.length || 0) +
+                    (results().learnings.length || 0) +
                     i
                 "
                 (click)="navigateToCorridor()"
                 (mouseenter)="
                   selectedIndex.set(
-                    (results().symbols?.length || 0) +
-                      (results().learnings?.length || 0) +
+                    (results().symbols.length || 0) +
+                      (results().learnings.length || 0) +
                       i
                   )
                 "

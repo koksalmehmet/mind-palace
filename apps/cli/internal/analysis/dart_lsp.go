@@ -8,7 +8,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -28,28 +27,6 @@ type DartLSPClient struct {
 	ready     bool
 	ctx       context.Context
 	cancel    context.CancelFunc
-}
-
-// LSP message types
-type lspRequest struct {
-	JSONRPC string      `json:"jsonrpc"`
-	ID      int64       `json:"id"`
-	Method  string      `json:"method"`
-	Params  interface{} `json:"params,omitempty"`
-}
-
-type lspResponse struct {
-	JSONRPC string          `json:"jsonrpc"`
-	ID      int64           `json:"id,omitempty"`
-	Method  string          `json:"method,omitempty"`
-	Result  json.RawMessage `json:"result,omitempty"`
-	Error   *lspError       `json:"error,omitempty"`
-	Params  json.RawMessage `json:"params,omitempty"`
-}
-
-type lspError struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
 }
 
 // LSP types for call hierarchy
@@ -496,19 +473,4 @@ func (c *DartLSPClient) ExtractCallsForSymbol(filePath string, line, character i
 	}
 
 	return calls, nil
-}
-
-func pathToURI(path string) string {
-	absPath, err := filepath.Abs(path)
-	if err != nil {
-		absPath = path
-	}
-	return "file://" + absPath
-}
-
-func uriToPath(uri string) string {
-	if strings.HasPrefix(uri, "file://") {
-		return strings.TrimPrefix(uri, "file://")
-	}
-	return uri
 }

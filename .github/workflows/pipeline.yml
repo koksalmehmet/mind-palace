@@ -35,6 +35,7 @@ jobs:
         run: |
           npm install
           npm run lint 2>/dev/null || echo "No lint configured"
+          npm run test
           npm run build
 
       - uses: actions/upload-artifact@v4
@@ -123,6 +124,16 @@ jobs:
           npm install
           npm run lint 2>/dev/null || echo "No lint configured"
           npm run compile
+
+      - name: Test
+        working-directory: apps/vscode
+        run: |
+          # Install xvfb for headless VS Code testing
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          
+          # Run tests in virtual framebuffer
+          xvfb-run -a npm test
 
   # ============================================================
   # STAGE 2: Check Changes (Automatic)

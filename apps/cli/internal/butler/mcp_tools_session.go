@@ -121,15 +121,6 @@ func (s *MCPServer) toolSessionEnd(id any, args map[string]interface{}) jsonRPCR
 	}
 }
 
-	return jsonRPCResponse{
-		JSONRPC: "2.0",
-		ID:      id,
-		Result: mcpToolResult{
-			Content: []mcpContent{{Type: "text", Text: output.String()}},
-		},
-	}
-}
-
 // toolRecall retrieves learnings, optionally filtered by scope or search query.
 func (s *MCPServer) toolRecall(id any, args map[string]interface{}) jsonRPCResponse {
 	query, _ := args["query"].(string)

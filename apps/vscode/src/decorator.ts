@@ -14,6 +14,7 @@ interface ContextPack {
 
 export class PalaceDecorator {
   private decorationType: vscode.TextEditorDecorationType;
+  private disposables: vscode.Disposable[] = [];
 
   constructor() {
     this.decorationType = vscode.window.createTextEditorDecorationType({
@@ -23,6 +24,36 @@ export class PalaceDecorator {
       overviewRulerColor: "blue",
       overviewRulerLane: vscode.OverviewRulerLane.Right,
     });
+  }
+
+  activate(context: vscode.ExtensionContext) {
+    const updateActive = (editor?: vscode.TextEditor) => {
+      if (editor) {
+        this.updateDecorations(editor);
+      }
+    };
+
+    this.disposables.push(
+      vscode.window.onDidChangeActiveTextEditor(updateActive)
+    );
+
+    let debounceTimer: NodeJS.Timeout | undefined;
+    this.disposables.push(
+      vscode.workspace.onDidChangeTextDocument((event) => {
+        const editor = vscode.window.activeTextEditor;
+        if (editor && event.document === editor.document) {
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => this.updateDecorations(editor), 300);
+        }
+      })
+    );
+
+    if (vscode.window.activeTextEditor) {
+      this.updateDecorations(vscode.window.activeTextEditor);
+    }
+
+    context.subscriptions.push(this);
+    context.subscriptions.push(...this.disposables);
   }
 
   updateDecorations(editor: vscode.TextEditor) {
@@ -77,5 +108,10 @@ export class PalaceDecorator {
     } catch (e) {
       logger.error("Failed to parse context-pack.json", e, "PalaceDecorator");
     }
+  }
+
+  dispose(): void {
+    this.decorationType.dispose();
+    this.disposables.forEach((d) => d.dispose());
   }
 }

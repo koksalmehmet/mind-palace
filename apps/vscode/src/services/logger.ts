@@ -1,5 +1,61 @@
 import * as vscode from "vscode";
 
+/**
+ * Safe wrapper around OutputChannel that prevents "Channel has been closed" errors.
+ * Gracefully handles write operations after channel disposal.
+ */
+export class SafeOutputChannel {
+  private isDisposed = false;
+
+  constructor(private readonly channel: vscode.OutputChannel) {}
+
+  appendLine(value: string): void {
+    if (this.isDisposed) {
+      // Silently ignore writes to disposed channel
+      return;
+    }
+    try {
+      this.channel.appendLine(value);
+    } catch (error) {
+      // Channel was disposed between check and write
+      this.isDisposed = true;
+    }
+  }
+
+  append(value: string): void {
+    if (this.isDisposed) {
+      return;
+    }
+    try {
+      this.channel.append(value);
+    } catch (error) {
+      this.isDisposed = true;
+    }
+  }
+
+  show(preserveFocus?: boolean): void {
+    if (this.isDisposed) {
+      return;
+    }
+    try {
+      this.channel.show(preserveFocus);
+    } catch (error) {
+      this.isDisposed = true;
+    }
+  }
+
+  dispose(): void {
+    if (!this.isDisposed) {
+      this.isDisposed = true;
+      this.channel.dispose();
+    }
+  }
+
+  get name(): string {
+    return this.channel.name;
+  }
+}
+
 export enum LogLevel {
   DEBUG = 0,
   INFO = 1,

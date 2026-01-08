@@ -276,14 +276,16 @@ func TestRunIncrementalFilesUnchangedCalculation(t *testing.T) {
 }
 
 func TestRunWithInvalidPath(t *testing.T) {
-	_, _, err := Run("/nonexistent/path/that/does/not/exist")
+	// Use a path with a non-existent drive/root that definitely won't exist
+	_, _, err := Run(filepath.Join(t.TempDir(), "nonexistent_subdir_12345", "path", "that", "does", "not", "exist"))
 	if err == nil {
 		t.Error("expected error for nonexistent path")
 	}
 }
 
 func TestRunIncrementalWithInvalidPath(t *testing.T) {
-	_, err := RunIncremental("/nonexistent/path/that/does/not/exist")
+	// Use a path with a non-existent drive/root that definitely won't exist
+	_, err := RunIncremental(filepath.Join(t.TempDir(), "nonexistent_subdir_12345", "path", "that", "does", "not", "exist"))
 	if err == nil {
 		t.Error("expected error for nonexistent path")
 	}

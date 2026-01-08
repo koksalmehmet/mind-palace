@@ -87,8 +87,11 @@ func TestBuildAssetName(t *testing.T) {
 	if !contains(name, runtime.GOARCH) {
 		t.Errorf("buildAssetName() = %q, should contain %q", name, runtime.GOARCH)
 	}
-	if runtime.GOOS == "windows" && !contains(name, ".exe") {
-		t.Errorf("buildAssetName() = %q, should contain .exe on Windows", name)
+	if runtime.GOOS == "windows" && !contains(name, ".zip") {
+		t.Errorf("buildAssetName() = %q, should contain .zip on Windows", name)
+	}
+	if runtime.GOOS != "windows" && !contains(name, ".tar.gz") {
+		t.Errorf("buildAssetName() = %q, should contain .tar.gz on non-Windows", name)
 	}
 	if !contains(name, "palace-") {
 		t.Errorf("buildAssetName() = %q, should start with palace-", name)

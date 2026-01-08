@@ -139,6 +139,13 @@ func createUpgrader(allowedOrigins []string) websocket.Upgrader {
 		WriteBufferSize: 1024,
 		CheckOrigin: func(r *http.Request) bool {
 			origin := r.Header.Get("Origin")
+
+			// Allow requests with no Origin header (e.g., non-browser clients, tests)
+			// This is safe because non-browser clients are not subject to CORS
+			if origin == "" {
+				return true
+			}
+
 			// Check if origin is in allowed list
 			for _, allowed := range allowedOrigins {
 				if origin == allowed {
@@ -316,10 +323,10 @@ type ActivityEventPayload struct {
 
 // ContradictionEventPayload is the payload for contradiction detection events
 type ContradictionEventPayload struct {
-	RecordID       string                   `json:"recordId"`
-	RecordKind     string                   `json:"recordKind"`
-	RecordContent  string                   `json:"recordContent"`
-	Contradictions []ContradictionDetail    `json:"contradictions"`
+	RecordID       string                `json:"recordId"`
+	RecordKind     string                `json:"recordKind"`
+	RecordContent  string                `json:"recordContent"`
+	Contradictions []ContradictionDetail `json:"contradictions"`
 }
 
 // ContradictionDetail contains details about a single contradiction

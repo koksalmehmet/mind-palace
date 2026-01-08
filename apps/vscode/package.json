@@ -380,6 +380,10 @@
     "test": "node ./out/test/runTests.js",
     "test:unit": "mocha --require ts-node/register 'src/test/unit/**/*.test.ts'",
     "test:coverage": "nyc npm run test:unit",
+    "test:coverage:report": "nyc report --reporter=text --reporter=lcov",
+    "test:coverage:html": "nyc report --reporter=html",
+    "test:coverage:check": "nyc check-coverage --lines 75 --functions 70 --branches 70",
+    "test:coverage:clean": "rimraf coverage .nyc_output",
     "pretest": "npm run compile && tsc -p ."
   },
   "devDependencies": {

@@ -134,7 +134,8 @@ func TestHandleWorkspaceSwitch(t *testing.T) {
 
 	t.Run("already on workspace", func(t *testing.T) {
 		rec := httptest.NewRecorder()
-		req := httptest.NewRequest(http.MethodPost, "/api/workspace/switch", bytes.NewBufferString(`{"path":"`+root+`"}`))
+		reqBody, _ := json.Marshal(map[string]string{"path": root})
+		req := httptest.NewRequest(http.MethodPost, "/api/workspace/switch", bytes.NewBuffer(reqBody))
 
 		s.handleWorkspaceSwitch(rec, req)
 
