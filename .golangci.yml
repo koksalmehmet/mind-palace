@@ -343,10 +343,21 @@ issues:
       linters:
         - errcheck
 
-    # Memory package (rows.Err checked at scan level, not query level)
+    # Memory package (rows.Err checked at scan level, prealloc not critical for dynamic queries)
     - path: apps/cli/internal/memory/
       linters:
         - rowserrcheck
+        - prealloc
+
+    # Butler/corridor/index (rows.Err checked at scan level)
+    - path: apps/cli/internal/(butler|corridor|index)/
+      linters:
+        - rowserrcheck
+
+    # Signal package (prealloc not critical)
+    - path: apps/cli/internal/signal/
+      linters:
+        - prealloc
 
     # Unused parameters in parsers/index (intentional for interface compatibility)
     - path: apps/cli/internal/(analysis|index)/
