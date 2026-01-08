@@ -89,7 +89,7 @@ func NewDartLSPClient(rootPath string) (*DartLSPClient, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	cmd := exec.CommandContext(ctx, dartPath, "language-server", "--client-id=mind-palace", "--client-version=1.0.0") //nolint:gosec // command path is trusted
+	cmd := exec.CommandContext(ctx, dartPath, "language-server", "--client-id=mind-palace", "--client-version=1.0.0")
 	cmd.Dir = rootPath
 
 	stdin, err := cmd.StdinPipe()

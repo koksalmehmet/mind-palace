@@ -273,7 +273,7 @@ func extractFromTarGz(archivePath, binaryName string) (string, error) {
 				return "", err
 			}
 
-			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
+			if err := os.Chmod(tmpFile.Name(), 0o755); err != nil {
 				tmpFile.Close()
 				os.Remove(tmpFile.Name())
 				return "", err
@@ -321,7 +321,7 @@ func extractZipFile(f *zip.File) (string, error) {
 		return "", err
 	}
 
-	if err := os.Chmod(tmpFile.Name(), 0o755); err != nil { //nolint:gosec // executable permissions required
+	if err := os.Chmod(tmpFile.Name(), 0o755); err != nil {
 		os.Remove(tmpFile.Name())
 		return "", err
 	}
@@ -419,7 +419,7 @@ func replaceExecutable(currentPath, newPath string) error {
 	}
 	defer newFile.Close()
 
-	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755) //nolint:gosec // executable permissions required
+	destFile, err := os.OpenFile(currentPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
 	if err != nil {
 		os.Rename(backupPath, currentPath)
 		return err
@@ -438,7 +438,7 @@ func replaceExecutable(currentPath, newPath string) error {
 }
 
 func loadCache(path string) (cacheEntry, bool) {
-	data, err := os.ReadFile(path) //nolint:gosec // cache path is safe
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return cacheEntry{}, false
 	}
@@ -456,7 +456,7 @@ func loadCache(path string) (cacheEntry, bool) {
 }
 
 func saveCache(path string, entry cacheEntry) {
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil { //nolint:gosec // standard directory permissions
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		return
 	}
 
