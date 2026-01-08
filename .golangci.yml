@@ -1,14 +1,8 @@
+version: "2"
 run:
   timeout: 5m
   tests: true
-  skip-dirs:
-    - vendor
-    - node_modules
-    - apps/dashboard
-    - apps/docs
-    - apps/vscode
-    - scripts
-    - packaging
+
 
 linters:
   enable:
@@ -132,7 +126,7 @@ linters-settings:
       - G304
   misspell:
     locale: US
-    ignore-rules:
+    ignore-words:
       - "colour"
   unparam:
     check-exported: false
@@ -146,6 +140,14 @@ linters-settings:
     for-loops: true
 
 issues:
+  exclude-dirs:
+    - vendor
+    - node_modules
+    - apps/dashboard
+    - apps/docs
+    - apps/vscode
+    - scripts
+    - packaging
   max-issues-per-linter: 0
   max-same-issues: 0
   exclude-rules:
