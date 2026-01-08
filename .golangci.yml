@@ -2,9 +2,7 @@
 # Go version: 1.24 (aligned with go.mod)
 # Project type: CLI tool with parsers, MCP server, SQLite database, memory management
 # Updated: January 2026
-# Format: golangci-lint v2
-
-version: "2"
+# Compatible with: golangci-lint v1.64+
 
 run:
   timeout: 5m
@@ -12,7 +10,6 @@ run:
   tests: true
 
 linters:
-  default: none
   enable:
     # ============================================================================
     # PHASE 1: Critical linters (enable immediately)
@@ -50,6 +47,8 @@ linters:
     - unconvert       # Unnecessary type conversions
     
     # Style & best practices
+    - gofmt           # Go formatting
+    - goimports       # Go imports formatting
     - misspell        # Spelling mistakes
     - revive          # Fast, configurable, extensible linter (replaces golint)
     
@@ -77,7 +76,7 @@ linters:
     - testifylint     # Testify assertions (project uses testify)
     - tparallel       # Incorrect usage of t.Parallel()
 
-  settings:
+linters-settings:
     # Error checking
     errcheck:
       check-type-assertions: true
@@ -211,23 +210,21 @@ linters:
       range-loops: true
       for-loops: true
 
-  exclusions:
-    generated: lax
-    warn-unused: true
-    
-    # Exclude specific directories via paths
-    paths:
-      - vendor
-      - node_modules
-      - apps/dashboard
-      - apps/docs
-      - apps/vscode
-      - scripts
-      - packaging
-      - ".*\\.pb\\.go$"
-      - ".*_generated\\.go$"
-    
-    rules:
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new: false
+  
+  exclude-dirs:
+    - vendor
+    - node_modules
+    - apps/dashboard
+    - apps/docs
+    - apps/vscode
+    - scripts
+    - packaging
+  
+  exclude-rules:
       # Test files - relax certain checks
       - path: _test\.go
         linters:
@@ -449,20 +446,8 @@ linters:
         linters:
           - prealloc
 
-# Formatters (gofmt, goimports moved here in v2)
-formatters:
-  enable:
-    - gofmt
-    - goimports
-
-issues:
-  max-issues-per-linter: 0
-  max-same-issues: 0
-  new: false
-  fix: false
-
 severity:
-  default: error
+  default-severity: error
   rules:
     - linters:
         - misspell
