@@ -159,8 +159,6 @@ func TestOpenAICompletion(t *testing.T) {
 			if result != tt.wantText {
 				t.Errorf("Complete() = %q, want %q", result, tt.wantText)
 			}
-
-			_ = originalURL // avoid unused warning
 		})
 	}
 }
