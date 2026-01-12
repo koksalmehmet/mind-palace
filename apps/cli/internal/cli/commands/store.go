@@ -171,6 +171,8 @@ func ExecuteStore(opts StoreOptions) error {
 	opts.Tags = append(opts.Tags, extractedTags...)
 
 	// Store based on kind
+	// CLI-created records are approved by default (human interface)
+	// Agent-created records via MCP will use 'proposed' by default (Phase 3)
 	var id string
 	switch kind {
 	case memory.RecordKindIdea:
@@ -187,6 +189,7 @@ func ExecuteStore(opts StoreOptions) error {
 			Scope:     opts.Scope,
 			ScopePath: opts.ScopePath,
 			Source:    "cli",
+			Authority: string(memory.AuthorityApproved), // CLI = human, approved by default
 		}
 		id, err = mem.AddDecision(dec)
 	case memory.RecordKindLearning:
@@ -196,6 +199,7 @@ func ExecuteStore(opts StoreOptions) error {
 			ScopePath:  opts.ScopePath,
 			Source:     "cli",
 			Confidence: opts.Confidence,
+			Authority:  string(memory.AuthorityApproved), // CLI = human, approved by default
 		}
 		id, err = mem.AddLearning(learn)
 	}

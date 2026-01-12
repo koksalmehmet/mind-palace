@@ -28,6 +28,8 @@ var migrations = []func(*sql.Tx) error{
 	migrateV2,
 	// Migration 3: Postmortems table for failure memory
 	migrateV3,
+	// Migration 4: Authority field for governance (proposed/approved/legacy_approved)
+	migrateV4,
 }
 
 // migrateV0 creates the initial database schema (version 0)
@@ -392,4 +394,47 @@ END;
 `
 	_, err := tx.ExecContext(context.Background(), schema)
 	return err
+}
+
+// migrateV4 adds authority field for governance layer
+func migrateV4(tx *sql.Tx) error {
+	// Add authority columns to decisions and learnings tables
+	// SQLite doesn't support IF NOT EXISTS for ALTER TABLE, so we ignore errors
+	// if the column already exists
+	alterStatements := []string{
+		`ALTER TABLE decisions ADD COLUMN authority TEXT DEFAULT 'proposed'`,
+		`ALTER TABLE decisions ADD COLUMN promoted_from_proposal_id TEXT DEFAULT ''`,
+		`ALTER TABLE learnings ADD COLUMN authority TEXT DEFAULT 'proposed'`,
+		`ALTER TABLE learnings ADD COLUMN promoted_from_proposal_id TEXT DEFAULT ''`,
+	}
+
+	for _, stmt := range alterStatements {
+		_, _ = tx.ExecContext(context.Background(), stmt)
+	}
+
+	// Backfill existing records with legacy_approved (DP-2: preserves audit trail)
+	backfillStatements := []string{
+		`UPDATE decisions SET authority = 'legacy_approved' WHERE authority = 'proposed'`,
+		`UPDATE learnings SET authority = 'legacy_approved' WHERE authority = 'proposed'`,
+	}
+
+	for _, stmt := range backfillStatements {
+		if _, err := tx.ExecContext(context.Background(), stmt); err != nil {
+			return fmt.Errorf("backfill authority: %w", err)
+		}
+	}
+
+	// Create indexes on authority for efficient filtering
+	indexStatements := []string{
+		`CREATE INDEX IF NOT EXISTS idx_decisions_authority ON decisions(authority)`,
+		`CREATE INDEX IF NOT EXISTS idx_learnings_authority ON learnings(authority)`,
+	}
+
+	for _, stmt := range indexStatements {
+		if _, err := tx.ExecContext(context.Background(), stmt); err != nil {
+			return fmt.Errorf("create authority index: %w", err)
+		}
+	}
+
+	return nil
 }
