@@ -57,6 +57,9 @@ func (s *MCPServer) toolStore(id any, args map[string]interface{}) jsonRPCRespon
 	var recordID string
 	var err error
 
+	// Store based on kind
+	// Phase 1: MCP-created records are approved for backward compatibility
+	// Phase 3 will add mode gating where agent mode creates proposals instead
 	switch kind {
 	case memory.RecordKindIdea:
 		idea := memory.Idea{
@@ -72,6 +75,7 @@ func (s *MCPServer) toolStore(id any, args map[string]interface{}) jsonRPCRespon
 			Scope:     scope,
 			ScopePath: scopePath,
 			Source:    "agent",
+			Authority: string(memory.AuthorityApproved), // Phase 1: approved for backward compatibility
 		}
 		recordID, err = s.butler.AddDecision(dec)
 	case memory.RecordKindLearning:
@@ -81,6 +85,7 @@ func (s *MCPServer) toolStore(id any, args map[string]interface{}) jsonRPCRespon
 			ScopePath:  scopePath,
 			Source:     "agent",
 			Confidence: 0.5,
+			Authority:  string(memory.AuthorityApproved), // Phase 1: approved for backward compatibility
 		}
 		recordID, err = s.butler.AddLearning(learning)
 	}
