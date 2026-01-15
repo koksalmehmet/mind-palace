@@ -1,6 +1,8 @@
 package butler
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -82,8 +84,9 @@ func (s *MCPServer) toolStoreDirect(id any, args map[string]interface{}) jsonRPC
 
 	// Create audit log entry
 	details := map[string]string{
-		"scope":      scope,
-		"scope_path": scopePath,
+		"scope":        scope,
+		"scope_path":   scopePath,
+		"content_hash": hashContent(content),
 	}
 	detailsJSON, _ := json.Marshal(details)
 
@@ -273,4 +276,9 @@ func (s *MCPServer) toolReject(id any, args map[string]interface{}) jsonRPCRespo
 			Content: []mcpContent{{Type: "text", Text: output.String()}},
 		},
 	}
+}
+// hashContent computes SHA-256 hash of content for audit trails.
+func hashContent(content string) string {
+	hash := sha256.Sum256([]byte(content))
+	return hex.EncodeToString(hash[:])
 }

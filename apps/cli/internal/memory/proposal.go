@@ -323,6 +323,14 @@ func (m *Memory) ApproveProposal(proposalID, reviewedBy, reviewNote string) (str
 		return "", fmt.Errorf("proposal %s is already %s", proposalID, proposal.Status)
 	}
 
+	// Begin transaction to ensure atomicity
+	ctx := context.Background()
+	tx, err := m.db.BeginTx(ctx, nil)
+	if err != nil {
+		return "", fmt.Errorf("begin transaction: %w", err)
+	}
+	defer tx.Rollback() // Rollback on any error
+
 	now := time.Now().UTC()
 	var promotedID string
 
@@ -376,13 +384,18 @@ func (m *Memory) ApproveProposal(proposalID, reviewedBy, reviewNote string) (str
 	}
 
 	// Update the proposal to approved status
-	_, err = m.db.ExecContext(context.Background(), `
+	_, err = tx.ExecContext(ctx, `
 		UPDATE proposals
 		SET status = ?, reviewed_by = ?, reviewed_at = ?, review_note = ?, promoted_to_id = ?
 		WHERE id = ?
 	`, ProposalStatusApproved, reviewedBy, now.Format(time.RFC3339), reviewNote, promotedID, proposalID)
 	if err != nil {
 		return "", fmt.Errorf("update proposal status: %w", err)
+	}
+
+	// Commit the transaction
+	if err = tx.Commit(); err != nil {
+		return "", fmt.Errorf("commit transaction: %w", err)
 	}
 
 	return promotedID, nil

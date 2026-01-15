@@ -1,6 +1,7 @@
 package butler
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 
@@ -311,7 +312,7 @@ func (b *Butler) matchLearnings(scope memory.Scope, scopePath string, intentWord
 			if len(reasons) > 0 {
 				reason = reasons[0]
 			}
-			reason += " (" + string(rune('0'+confidencePercent/10)) + string(rune('0'+confidencePercent%10)) + "%)"
+			reason += fmt.Sprintf(" (%d%%)", confidencePercent)
 
 			results = append(results, scoredNode{
 				node: RouteNode{

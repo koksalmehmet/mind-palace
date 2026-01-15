@@ -183,7 +183,8 @@ func (s *MCPServer) toolStore(id any, args map[string]interface{}) jsonRPCRespon
 				if minConfidence <= 0 {
 					minConfidence = 0.8
 				}
-				autoLink := cfg.ContradictionAutoLink
+				// Disable auto-linking in agent mode - requires human approval
+				autoLink := cfg.ContradictionAutoLink && s.mode == MCPModeHuman
 
 				contradictions, _ = mem.AutoCheckContradictions(
 					recordID, string(kind), content,
@@ -816,6 +817,10 @@ func (s *MCPServer) toolRecallContradictions(id any, args map[string]interface{}
 	autoLink := true
 	if al, ok := args["autoLink"].(bool); ok {
 		autoLink = al
+	}
+	// Disable auto-linking in agent mode - requires human approval
+	if s.mode == MCPModeAgent {
+		autoLink = false
 	}
 
 	// Get the source record
