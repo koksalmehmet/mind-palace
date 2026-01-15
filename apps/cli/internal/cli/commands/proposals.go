@@ -222,6 +222,16 @@ func ExecuteApprove(opts ApproveOptions) error {
 		return fmt.Errorf("approve proposal: %w", err)
 	}
 
+	// Audit log for approval
+	_, _ = mem.AddAuditLog(memory.AuditLogEntry{
+		Action:     memory.AuditActionApprove,
+		ActorType:  memory.AuditActorHuman,
+		ActorID:    opts.ReviewedBy,
+		TargetID:   opts.ProposalID,
+		TargetKind: "proposal",
+		Details:    fmt.Sprintf(`{"promoted_to": "%s", "note": "%s"}`, promotedID, opts.ReviewNote),
+	})
+
 	// Output success
 	fmt.Printf("+ Approved! Created %s: %s\n", proposal.ProposedAs, promotedID)
 	if opts.ReviewNote != "" {
@@ -305,6 +315,16 @@ func ExecuteReject(opts RejectOptions) error {
 	if err != nil {
 		return fmt.Errorf("reject proposal: %w", err)
 	}
+
+	// Audit log for rejection
+	_, _ = mem.AddAuditLog(memory.AuditLogEntry{
+		Action:     memory.AuditActionReject,
+		ActorType:  memory.AuditActorHuman,
+		ActorID:    opts.ReviewedBy,
+		TargetID:   opts.ProposalID,
+		TargetKind: "proposal",
+		Details:    fmt.Sprintf(`{"note": "%s"}`, opts.ReviewNote),
+	})
 
 	// Output success
 	fmt.Printf("x Rejected proposal: %s\n", opts.ProposalID)

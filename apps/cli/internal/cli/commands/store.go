@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -218,13 +220,15 @@ func ExecuteStore(opts StoreOptions) error {
 			if kind == memory.RecordKindLearning {
 				targetKind = "learning"
 			}
+			hash := sha256.Sum256([]byte(opts.Content))
+			contentHash := hex.EncodeToString(hash[:])
 			_, _ = mem.AddAuditLog(memory.AuditLogEntry{
 				Action:     memory.AuditActionDirectWrite,
 				ActorType:  memory.AuditActorHuman,
 				ActorID:    "cli",
 				TargetID:   id,
 				TargetKind: targetKind,
-				Details:    fmt.Sprintf(`{"scope":"%s","scope_path":"%s"}`, opts.Scope, opts.ScopePath),
+				Details:    fmt.Sprintf(`{"scope":"%s","scope_path":"%s","content_hash":"%s"}`, opts.Scope, opts.ScopePath, contentHash),
 			})
 		} else {
 			// Proposal path (default)

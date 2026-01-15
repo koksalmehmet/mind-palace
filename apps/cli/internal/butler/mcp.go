@@ -39,11 +39,17 @@ func IsValidMCPMode(mode string) bool {
 }
 
 // adminOnlyTools lists tools that are only available in human mode.
-// These tools can bypass the proposal system or perform privileged operations.
+// These tools can bypass the proposal system, perform privileged operations,
+// or mutate memory state (outcomes, links, archival, obsolescence).
 var adminOnlyTools = map[string]bool{
-	"store_direct": true, // Bypasses proposal system
-	"approve":      true, // Approves proposals
-	"reject":       true, // Rejects proposals
+	"store_direct":    true, // Bypasses proposal system
+	"approve":         true, // Approves proposals
+	"reject":          true, // Rejects proposals
+	"recall_outcome":  true, // Marks decisions with outcomes
+	"recall_link":     true, // Links ideas/decisions/learnings
+	"recall_unlink":   true, // Removes links
+	"recall_obsolete": true, // Marks learnings obsolete
+	"recall_archive":  true, // Archives learnings
 }
 
 // IsAdminOnlyTool returns true if the tool requires human mode.
