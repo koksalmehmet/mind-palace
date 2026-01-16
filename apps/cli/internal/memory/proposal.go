@@ -51,13 +51,13 @@ type Proposal struct {
 
 // EvidenceRef represents evidence supporting a proposal.
 type EvidenceRef struct {
-	SessionID      string `json:"sessionId,omitempty"`
-	ConversationID string `json:"conversationId,omitempty"`
-	Extractor      string `json:"extractor,omitempty"`
-	SourceRecord   string `json:"sourceRecord,omitempty"`
-	TargetRecord   string `json:"targetRecord,omitempty"`
+	SessionID      string  `json:"sessionId,omitempty"`
+	ConversationID string  `json:"conversationId,omitempty"`
+	Extractor      string  `json:"extractor,omitempty"`
+	SourceRecord   string  `json:"sourceRecord,omitempty"`
+	TargetRecord   string  `json:"targetRecord,omitempty"`
 	Confidence     float64 `json:"confidence,omitempty"`
-	Explanation    string `json:"explanation,omitempty"`
+	Explanation    string  `json:"explanation,omitempty"`
 }
 
 // GenerateDedupeKey creates a deterministic key for duplicate detection.

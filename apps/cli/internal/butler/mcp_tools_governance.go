@@ -277,6 +277,7 @@ func (s *MCPServer) toolReject(id any, args map[string]interface{}) jsonRPCRespo
 		},
 	}
 }
+
 // hashContent computes SHA-256 hash of content for audit trails.
 func hashContent(content string) string {
 	hash := sha256.Sum256([]byte(content))
