@@ -17,10 +17,13 @@ type RouteNodeKind string
 
 const (
 	// RouteNodeKindRoom represents a room node in the route.
-	RouteNodeKindRoom     RouteNodeKind = "room"
+	RouteNodeKindRoom RouteNodeKind = "room"
+	// RouteNodeKindDecision represents a decision node in the route.
 	RouteNodeKindDecision RouteNodeKind = "decision"
+	// RouteNodeKindLearning represents a learning node in the route.
 	RouteNodeKindLearning RouteNodeKind = "learning"
-	RouteNodeKindFile     RouteNodeKind = "file"
+	// RouteNodeKindFile represents a file node in the route.
+	RouteNodeKindFile RouteNodeKind = "file"
 )
 
 // RouteNode represents a single node in the navigation route.

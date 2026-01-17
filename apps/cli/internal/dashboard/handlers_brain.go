@@ -133,7 +133,7 @@ func (s *Server) handleRemember(w http.ResponseWriter, r *http.Request) {
 			ActorID:    "dashboard",
 			TargetID:   recordID,
 			TargetKind: targetKind,
-			Details:    fmt.Sprintf(`{"scope":"%s","scope_path":"%s","content_hash":"%s"}`, req.Scope, req.ScopePath, contentHash),
+			Details:    fmt.Sprintf(`{"scope":"%s","scope_path":"%s","content_hash":"%s"}`, req.Scope, req.ScopePath, contentHash), //nolint:gocritic // JSON template uses %s for values inside quotes
 		})
 	}
 
